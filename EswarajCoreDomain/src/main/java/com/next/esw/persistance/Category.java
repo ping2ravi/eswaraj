@@ -19,7 +19,7 @@ import javax.persistence.Version;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@Version
 	@Column(name="ver")
@@ -38,7 +38,7 @@ public class Category {
 	@Column(name = "name", nullable = false, length=64)
 	private String Name;
 
-	@Column(name = "name", nullable = false, length=512)
+	@Column(name = "description", nullable = false, length=512)
 	private String description;
 
 	
