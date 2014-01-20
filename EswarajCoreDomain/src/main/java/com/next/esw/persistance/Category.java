@@ -2,50 +2,21 @@ package com.next.esw.persistance;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
-@Entity
-@Table(name="categories")
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,region="Account", include="all")
+@NodeEntity
 public class Category {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GraphId
 	private Long id;
-	@Version
-	@Column(name="ver")
-	private int ver;
-	
-	@Column(name="date_created")
 	private Date dateCreated;
-	@Column(name="date_modified")
 	private Date dateModified;
-	@Column(name="creator_id")
 	private Long creatorId;
-	@Column(name="modifier_id")
 	private Long modifierId;
-
-	
-	@Column(name = "name", nullable = false, length=64)
 	private String Name;
-
-	@Column(name = "description", nullable = false, length=512)
 	private String description;
-
-	
-	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-    @JoinColumn(name="parent_category_id")
     private Category parentCategory;
-	@Column(name="parent_category_id", insertable=false,updatable=false)
 	private Long parentCategoryId;
 	
 	public Long getId() {
@@ -53,12 +24,6 @@ public class Category {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public int getVer() {
-		return ver;
-	}
-	public void setVer(int ver) {
-		this.ver = ver;
 	}
 	public Date getDateCreated() {
 		return dateCreated;
