@@ -1,15 +1,11 @@
 package com.next.esw.persistance.dao;
 
-import java.util.List;
+import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.next.esw.persistance.Category;
 
-public interface CategoryDao {
+public interface CategoryDao extends GraphRepository<Category>{
 
-	public abstract Category saveCategory(Category category);
-
-	public abstract Category getCategoryById(Long id);
-
-	public abstract List<Category> getAllCategories();
+	public Category getCategoryById(Long id);
 
 }
