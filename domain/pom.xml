@@ -6,9 +6,10 @@
 	<name>ESwaraj Domain</name>
 	<description>domain for eswaraj</description>
 	
+	
 	<parent>
 		<groupId>com.eswaraj</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>eswaraj-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath />
 	</parent>

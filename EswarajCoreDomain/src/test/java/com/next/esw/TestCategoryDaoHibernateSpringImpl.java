@@ -3,6 +3,7 @@ package com.next.esw;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.mapping.MappingPolicy;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.annotation.Rollback;
@@ -21,13 +22,17 @@ public class TestCategoryDaoHibernateSpringImpl {
 	@Autowired Neo4jTemplate template;
 	
 	@Autowired CategoryDao categoryDao;
+	
+	@Autowired
+	Neo4jTemplate neo4jTemplate;
 
 	
 	@Test
     // overrides the class-level defaultRollback setting
     @Rollback(false)
     public void modifyDatabaseWithinTransaction() {
-        System.out.println("Test");
+		MappingPolicy mappingPolicy = neo4jTemplate.getMappingPolicy(Depa)
+        System.out.println("Test "+mappingPolicy);
         Category category = new Category();
         category.setName("Test1");
         category.setDescription("This a test Description");
