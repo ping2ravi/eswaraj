@@ -24,10 +24,6 @@ public class TestCategoryRepository {
 	
 	@Test
     public void basicSaveCategoryTest() {
-		MappingPolicy mappingPolicy = neo4jTemplate.getMappingPolicy(Department.class);
-		System.out.println("mappingPolicy="+mappingPolicy);
-		MappingPolicy categoryMappingPolicy = neo4jTemplate.getMappingPolicy(Category.class);
-		System.out.println("categoryMappingPolicy="+categoryMappingPolicy);
         Category category = new Category();
         category.setName("Test1");
         category.setDescription("This a test Description");
