@@ -1,4 +1,4 @@
-package com.eswaraj.domain;
+package com.eswaraj.web;
 
 public class Test {
 
