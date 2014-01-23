@@ -63,4 +63,24 @@ public class TestPersonRepository {
 		person.setLocation(new Location());
 		person = personRespository.save(person);
 	}
+	
+	@Test(expected=ValidationException.class)
+	public void shouldCheckNameLength() {
+		Person person = new Person();
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person.setName("f");
+		person = personRespository.save(person);
+	}
+	
+	@Test(expected=ValidationException.class)
+	public void shouldCheckValidCharacters() {
+		Person person = new Person();
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person.setName("Ff12 hhh h");
+		person = personRespository.save(person);
+	}
+	
+	
 }

@@ -15,6 +15,8 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class Complaint extends BaseNode {
 
+	private String title;
+	private String description;
 	private Location location;
 	private Category category;
 	private Person person;

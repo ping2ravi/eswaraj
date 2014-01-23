@@ -1,5 +1,7 @@
 package com.eswaraj.domain.validator;
 
+import java.util.regex.Pattern;
+
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.google.gdata.util.common.base.StringUtil;
 
@@ -30,4 +32,13 @@ public abstract class BaseValidator<T> {
 		}
 	}
 	
+	protected void checkLength(String fieldValue, String validationMessage, int min, int max) throws ValidationException {
+		if(fieldValue.length() < min || fieldValue.length() > max)
+			throw new ValidationException(validationMessage);
+	}
+	
+	protected void checkAcceptedCharacters(String fieldValue, String validationMessage, String regex) throws ValidationException {
+		if(!fieldValue.matches(regex))
+			throw new ValidationException(validationMessage);
+	}
 }

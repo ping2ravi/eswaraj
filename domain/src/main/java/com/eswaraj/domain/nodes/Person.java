@@ -57,6 +57,13 @@ public class Person extends BaseNode {
 		this.email = email;
 	}
 	
+	public Collection<TelephoneNumber> getNumbers() {
+		return numbers;
+	}
+	public void setNumbers(Collection<TelephoneNumber> numbers) {
+		this.numbers = numbers;
+	}
+	
 	@Override
 	public String toString() {
 		return "Person [name=" + name + ", gender=" + gender + ", email=" + email + "]";
