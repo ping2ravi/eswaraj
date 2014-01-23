@@ -13,14 +13,14 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class State extends BaseNode{
 
-	private String Name;
+	private String name;
 	private Country country;
 	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public Country getCountry() {
 		return country;
@@ -28,5 +28,8 @@ public class State extends BaseNode{
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-
+	@Override
+	public String toString() {
+		return "State [Name=" + name + ", country=" + country + "]";
+	}
 }
