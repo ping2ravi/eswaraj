@@ -21,6 +21,7 @@ public class PersonValidator extends BaseValidator<Person>{
 		checkIfNull("Location", person.getLocation(),"Persons location cannot be null");
 		checkLength(person.getName(), "Person name should be of length 2 and 10", 2, 10);
 		checkAcceptedCharacters(person.getName(), "Person's name can only contain alphabets", ValidCharacters.NAME);
+		checkAcceptedCharacters(person.getEmail(), "Invalid email", ValidCharacters.EMAIL);
 	}
 
 	public void validateBeforeDelete(Person person) throws ValidationException {
