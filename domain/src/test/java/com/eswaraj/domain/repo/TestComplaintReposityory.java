@@ -1,5 +1,8 @@
 package com.eswaraj.domain.repo;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +32,10 @@ public class TestComplaintReposityory {
 	@Test
 	public void shouldSaveComplaint() {
 		Complaint complaint = new Complaint();
+		complaint = complaintRepository.save(complaint);
 		
+		Complaint expectedComplaint = complaintRepository.getComplaintById(complaint.getId());
+		
+		assertEquals(expectedComplaint, complaint);
 	}
-	
-	
 }
