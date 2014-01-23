@@ -35,4 +35,9 @@ public class Country extends BaseNode{
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
+	@Override
+	public String toString() {
+		return "Country [name=" + name + ", isdCode=" + isdCode + ", countryCode=" + countryCode + "]";
+	}
+	
 }

@@ -13,19 +13,23 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class District extends BaseNode{
 
-	private String Name;
+	private String name;
 	private State state;
 	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public State getState() {
 		return state;
 	}
 	public void setState(State state) {
 		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "District [Name=" + name + ", state=" + state + "]";
 	}
 }

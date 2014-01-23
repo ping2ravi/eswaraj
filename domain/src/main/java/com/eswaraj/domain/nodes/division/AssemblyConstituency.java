@@ -13,15 +13,15 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class AssemblyConstituency extends BaseNode{
 
-	private String Name;
+	private String name;
 	private District district;
 	private ParliamentConstituency parliamentConstituency;
 	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public District getDistrict() {
 		return district;
@@ -34,5 +34,9 @@ public class AssemblyConstituency extends BaseNode{
 	}
 	public void setParliamentConstituency(ParliamentConstituency parliamentConstituency) {
 		this.parliamentConstituency = parliamentConstituency;
+	}
+	@Override
+	public String toString() {
+		return "AssemblyConstituency [Name=" + name + ", district=" + district + "]";
 	}
 }
