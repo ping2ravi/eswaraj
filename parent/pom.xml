@@ -191,4 +191,30 @@
 			<version>${jmock.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <instrumentation>
+            <ignores>
+              <ignore>com.eswaraj.domain.base.*</ignore>
+              <ignore>com.eswaraj.domain.nodes.*</ignore>
+              <ignore>com.eswaraj.domain.nodes.division.*</ignore>
+              <ignore>com.eswaraj.domain.nodes.division.*</ignore>
+            </ignores>
+            <!-- 
+            <excludes>
+              <exclude>com/example/dullcode/**/*.class</exclude>
+              <exclude>com/example/**/*Test.class</exclude>
+            </excludes>
+             -->
+          </instrumentation>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
