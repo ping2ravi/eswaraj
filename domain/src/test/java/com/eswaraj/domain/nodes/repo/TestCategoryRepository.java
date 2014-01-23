@@ -1,5 +1,6 @@
 package com.eswaraj.domain.nodes.repo;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -44,6 +45,9 @@ public class TestCategoryRepository extends BaseEswarajTest{
         Category cat2 = categoryRepository.getCategoryById(category.getId());
 
         assertNotNull(cat2);
+        assertEquals(category.getName(), cat2.getName());
+        assertEquals(category.getDescription(), cat2.getDescription());
+
         
         Department department2 = departmentRepository.getDepartmentById(category.getDepartment().getId());
         assertNotNull(department2);
