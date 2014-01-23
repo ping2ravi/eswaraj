@@ -1,7 +1,5 @@
 package com.eswaraj.domain.validator;
 
-import java.util.regex.Pattern;
-
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.google.gdata.util.common.base.StringUtil;
 

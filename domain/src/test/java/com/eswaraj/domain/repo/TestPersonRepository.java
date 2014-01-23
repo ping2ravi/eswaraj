@@ -74,7 +74,7 @@ public class TestPersonRepository {
 	}
 	
 	@Test(expected=ValidationException.class)
-	public void shouldCheckValidCharacters() {
+	public void shouldCheckValidCharacters_InName() {
 		Person person = new Person();
 		person.setEmail("foo@bar.com");
 		person.setLocation(new Location());
@@ -82,5 +82,12 @@ public class TestPersonRepository {
 		person = personRespository.save(person);
 	}
 	
-	
+	@Test(expected=ValidationException.class)
+	public void shouldCheckValidCharacters_InEmail() {
+		Person person = new Person();
+		person.setEmail("foo@bar");
+		person.setLocation(new Location());
+		person.setName("Ff hhh");
+		person = personRespository.save(person);
+	}
 }
