@@ -31,7 +31,7 @@ public class ValidationConfigurator extends Neo4jConfiguration {
         return new ApplicationListener<AfterSaveEvent>() {
             @Override
             public void onApplicationEvent(AfterSaveEvent event) {
-            	System.out.println("AfterSaveEvent "+event.getEntity());
+            	//System.out.println("AfterSaveEvent "+event.getEntity());
             }
         };
     }
@@ -41,7 +41,7 @@ public class ValidationConfigurator extends Neo4jConfiguration {
         return new ApplicationListener<BeforeDeleteEvent>() {
             @Override
             public void onApplicationEvent(BeforeDeleteEvent event) {
-            	System.out.println("BeforeDeleteEvent "+event.getEntity());
+            	//System.out.println("BeforeDeleteEvent "+event.getEntity());
             }
         };
     }
@@ -51,7 +51,7 @@ public class ValidationConfigurator extends Neo4jConfiguration {
         return new ApplicationListener<AfterDeleteEvent>() {
             @Override
             public void onApplicationEvent(AfterDeleteEvent event) {
-            	System.out.println("AfterDeleteEvent "+event.getEntity());
+            	//System.out.println("AfterDeleteEvent "+event.getEntity());
             }
         };
     }

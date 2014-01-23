@@ -14,14 +14,14 @@ public class ValidationManager extends Neo4jConfiguration {
 	Map<Class, BaseValidator> validators = new HashMap<Class, BaseValidator>(); 
 	
 	public <T> void registerValidator(Class<T> type, BaseValidator<T> baseValidator){
-		System.out.println("registerValidator = "+baseValidator+", "+baseValidator.getClass());
+		//System.out.println("registerValidator = "+baseValidator+", "+baseValidator.getClass());
 		validators.put(type, baseValidator);
 	}
 	
 	public <T> void validateBeforeSave(BeforeSaveEvent<T> beforeSaveEvent){
-		System.out.println("ValidationManager.BeforeSaveEvent "+beforeSaveEvent.getEntity());
+		//System.out.println("ValidationManager.BeforeSaveEvent "+beforeSaveEvent.getEntity());
 		BaseValidator validator = validators.get(beforeSaveEvent.getEntity().getClass());
-		System.out.println("validator = "+validator);
+		//System.out.println("validator = "+validator);
 		if(validator != null){
 			validator.validateBeforeSave(beforeSaveEvent.getEntity());
 		}

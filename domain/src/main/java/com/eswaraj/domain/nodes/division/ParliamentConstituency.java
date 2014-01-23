@@ -5,16 +5,16 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import com.eswaraj.domain.base.BaseNode;
 
 /**
- * State level administrative division
- * @author ravi
+ * district level administrative division
+ * @author anuj
  * @date Jan 18, 2014
  *
  */
 @NodeEntity
-public class State extends BaseNode{
+public class ParliamentConstituency extends BaseNode{
 
 	private String Name;
-	private Country country;
+	private State state;
 	
 	public String getName() {
 		return Name;
@@ -22,11 +22,10 @@ public class State extends BaseNode{
 	public void setName(String name) {
 		Name = name;
 	}
-	public Country getCountry() {
-		return country;
+	public State getState() {
+		return state;
 	}
-	public void setCountry(Country country) {
-		this.country = country;
+	public void setState(State state) {
+		this.state = state;
 	}
-
 }
