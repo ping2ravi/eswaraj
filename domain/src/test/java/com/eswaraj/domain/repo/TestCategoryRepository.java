@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.repo;
+package com.eswaraj.domain.repo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.DepartmentRepository;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
