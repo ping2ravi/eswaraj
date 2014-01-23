@@ -22,6 +22,7 @@
 		<social-google-version>1.0.0.M3</social-google-version>
 		<neo4j.version>1.9.5</neo4j.version>
 		<spring.data.version>2.3.2.RELEASE</spring.data.version>
+		<jmock.version>2.6.0</jmock.version>
 	</properties>
 
 	<dependencies>
@@ -173,6 +174,21 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock</artifactId>
+			<version>${jmock.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-junit4</artifactId>
+			<version>${jmock.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-legacy</artifactId>
+			<version>${jmock.version}</version>
 		</dependency>
 	</dependencies>
 </project>

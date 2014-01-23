@@ -16,8 +16,8 @@ public class CategoryValidator extends BaseValidator<Category>{
 
 	@Override
 	public void validateBeforeSave(Category category) throws ValidationException {
-		System.out.println("CategoryValidator.validateBeforeSave="+category);
-		
+		checkIfEmpty("Name", category.getName(),"Category name can not be Null or Empty");
+		checkIfNull("Department", category.getDepartment(),"Department Can not be null for category");
 	}
 
 	@Override
