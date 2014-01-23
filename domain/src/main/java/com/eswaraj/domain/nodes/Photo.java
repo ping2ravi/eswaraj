@@ -21,6 +21,7 @@ public class Photo extends BaseNode {
 	private String smallUrl;
 	private String mediumUrl;
 	private String largeUrl;
+	
 	public String getOrgUrl() {
 		return orgUrl;
 	}
