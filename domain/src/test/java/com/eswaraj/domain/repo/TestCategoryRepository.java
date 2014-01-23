@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.repo;
+package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Department;
+<<<<<<< HEAD:domain/src/test/java/com/eswaraj/domain/nodes/repo/TestCategoryRepository.java
 import com.eswaraj.domain.validator.exception.ValidationException;
+=======
+import com.eswaraj.domain.repo.CategoryRepository;
+import com.eswaraj.domain.repo.DepartmentRepository;
+>>>>>>> aannuujj:domain/src/test/java/com/eswaraj/domain/repo/TestCategoryRepository.java
 
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)

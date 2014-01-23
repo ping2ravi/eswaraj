@@ -17,8 +17,11 @@
 	<dependencies>
 		<!-- eswaraj -->
 
-		<!-- Persistence -->
-		
+		<dependency>
+		    <groupId>javax.xml.registry</groupId>
+		    <artifactId>javax.xml.registry-api</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>

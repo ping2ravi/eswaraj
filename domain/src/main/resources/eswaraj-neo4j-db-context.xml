@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
 
 	<neo4j:config storeDirectory="/usr/local/graph.db" />
-	<neo4j:repositories base-package="com.next.esw.persistance.dao" />
+	<neo4j:repositories base-package="com.eswaraj.domain.repo" />
 	<neo4j:config graphDatabaseService="graphDatabaseService" />
 	<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 		<!-- <constructor-arg index="0" value="http://localhost:7474/db/data" /> -->
