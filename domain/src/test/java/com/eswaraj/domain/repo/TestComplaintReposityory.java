@@ -32,7 +32,18 @@ public class TestComplaintReposityory {
 		complaint.setTitle("test complaint");
 		complaint = complaintRepository.save(complaint);
 		
-		Complaint expectedComplaint = complaintRepository.getComplaintById(complaint.getId());
+		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
+		
+		assertEquals(expectedComplaint.getTitle(), complaint.getTitle());
+	}
+	
+	@Test
+	public void shouldGetComplaint_ByLocation() {
+		Complaint complaint = new Complaint();
+		complaint.setTitle("test complaint");
+		complaint = complaintRepository.save(complaint);
+		
+		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
 		
 		assertEquals(expectedComplaint.getTitle(), complaint.getTitle());
 	}
