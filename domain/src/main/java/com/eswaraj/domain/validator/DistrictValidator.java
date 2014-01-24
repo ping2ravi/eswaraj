@@ -26,7 +26,4 @@ public class DistrictValidator extends BaseValidator<District>{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 }

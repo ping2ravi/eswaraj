@@ -30,4 +30,13 @@ public abstract class BaseValidator<T> {
 		}
 	}
 	
+	protected void checkLength(String fieldValue, String validationMessage, int min, int max) throws ValidationException {
+		if(fieldValue.length() < min || fieldValue.length() > max)
+			throw new ValidationException(validationMessage);
+	}
+	
+	protected void checkAcceptedCharacters(String fieldValue, String validationMessage, String regex) throws ValidationException {
+		if(!fieldValue.matches(regex))
+			throw new ValidationException(validationMessage);
+	}
 }
