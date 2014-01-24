@@ -6,6 +6,6 @@ import com.eswaraj.domain.nodes.Category;
 
 public interface CategoryRepository extends GraphRepository<Category>{
 
-	public Category getById(Long id);
+	public Category getCategoryById(Long id);
 
 }
