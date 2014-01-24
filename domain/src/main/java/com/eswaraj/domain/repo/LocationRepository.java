@@ -13,6 +13,6 @@ import com.eswaraj.domain.nodes.Location;
  */
 public interface LocationRepository extends GraphRepository<Location>{
 
-	public Location getLocationById(Long id);
+	public Location getById(Long id);
 
 }
