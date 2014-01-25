@@ -24,15 +24,16 @@ public class Complaint extends BaseNode {
 	private Location location;
 	@RelatedTo(type="BELONGS_TO")
 	private Category category;
-	@RelatedTo(type="CREATED_BY")
+	@RelatedTo(type="LODGED_BY")
 	private Person person;
 	@RelatedTo(type="SERVED_BY")
 	private Administrator administrator;
+	@RelatedTo(type="IS_IN")
+	private Status status;
 	private Collection<Person> endorsements;
 	private Collection<Administrator> administrators;
 	private Collection<Photo> photos;
 	private Collection<Video> videos;
-	private Status status;
 	
 	public String getTitle() {
 		return title;
