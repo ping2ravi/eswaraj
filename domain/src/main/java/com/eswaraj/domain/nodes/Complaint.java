@@ -2,11 +2,13 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Collection;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
+import com.eswaraj.domain.nodes.Status.Mode;
 
 /**
  * Complaint made by a person
@@ -29,12 +31,18 @@ public class Complaint extends BaseNode {
 	@RelatedTo(type="SERVED_BY")
 	private Administrator administrator;
 	@RelatedTo(type="IS_IN")
+	@Fetch
 	private Status status;
 	private Collection<Person> endorsements;
 	private Collection<Administrator> administrators;
 	private Collection<Photo> photos;
 	private Collection<Video> videos;
 	
+	public Complaint(){}
+	public Complaint(String title) {
+		this.title = title;
+		this.status = new Status(Mode.PENDING);
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -94,6 +102,12 @@ public class Complaint extends BaseNode {
 	}
 	public void setVideos(Collection<Video> videos) {
 		this.videos = videos;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

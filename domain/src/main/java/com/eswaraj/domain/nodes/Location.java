@@ -17,6 +17,16 @@ public class Location extends BaseNode {
 	private double latitude;
 	private double longitude;
 	
+	public Location() {}
+	public Location(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public double getLatitude() {
 		return latitude;
 	}

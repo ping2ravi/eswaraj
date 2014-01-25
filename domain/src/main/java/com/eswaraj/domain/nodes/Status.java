@@ -3,6 +3,7 @@ package com.eswaraj.domain.nodes;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
+import com.eswaraj.domain.nodes.Status.Mode;
 
 /**
  * Status of the complaint
@@ -38,6 +39,12 @@ public class Status extends BaseNode {
 	}
 	
 	private Mode mode;
+
+	public Status(){}
+	
+	public Status(Mode mode) {
+		this.mode = mode;
+	}
 
 	public Mode getMode() {
 		return mode;
