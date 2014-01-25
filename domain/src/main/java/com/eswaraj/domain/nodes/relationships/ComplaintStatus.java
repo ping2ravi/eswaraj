@@ -5,32 +5,23 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.nodes.Complaint;
-import com.eswaraj.domain.nodes.Person;
+import com.eswaraj.domain.nodes.Status;
 
-@RelationshipEntity(type="LODGED_BY")
-public class ComplaintPerson {
+@RelationshipEntity(type="IS_IN")
+public class ComplaintStatus {
 
-	private int weight;
-	
 	@StartNode Complaint complaint;
-	@EndNode Person person;
-	
-	public int getWeight() {
-		return weight;
-	}
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
+	@EndNode Status status;
 	public Complaint getComplaint() {
 		return complaint;
 	}
 	public void setComplaint(Complaint complaint) {
 		this.complaint = complaint;
 	}
-	public Person getPerson() {
-		return person;
+	public Status getStatus() {
+		return status;
 	}
-	public void setPerson(Person person) {
-		this.person = person;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }
