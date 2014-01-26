@@ -13,6 +13,7 @@ import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Status.Mode;
 import com.eswaraj.domain.validator.exception.ValidationException;
 
@@ -32,6 +33,7 @@ public class TestComplaintReposityory {
 	@Autowired LocationRepository locationRepository;
 	@Autowired CategoryRepository categoryRepository;
 	@Autowired DepartmentRepository departmentRepository;
+	@Autowired PersonRepository personRepository;
 	
 	@Test
 	public void shouldSaveComplaint() {
@@ -40,6 +42,14 @@ public class TestComplaintReposityory {
 		category.setDepartment(new Department("dept1"));
 		complaint.setLocation(new Location("loc1"));
 		complaint.setCategory(category);
+		
+		Person person = new Person();
+		person.setName("Foo Bar");
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person = personRepository.save(person);
+		complaint.setPerson(person);
+		
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
 		assertEquals(expectedComplaint.getTitle(), complaint.getTitle());
@@ -52,6 +62,14 @@ public class TestComplaintReposityory {
 		category.setDepartment(new Department("dept1"));
 		complaint.setCategory(category);
 		complaint.setLocation(new Location("Loc1"));
+		
+		Person person = new Person();
+		person.setName("Foo Bar");
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person = personRepository.save(person);
+		complaint.setPerson(person);
+		
 		complaint = complaintRepository.save(complaint);
 		Location location = locationRepository.getById(complaint.getLocation().getId());
 		Complaint expectedComplaint = complaintRepository.getByLocation(location);
@@ -66,6 +84,14 @@ public class TestComplaintReposityory {
 		category = categoryRepository.save(category);
 		complaint.setCategory(category);
 		complaint.setLocation(new Location("Loc1"));
+		
+		Person person = new Person();
+		person.setName("Foo Bar");
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person = personRepository.save(person);
+		complaint.setPerson(person);
+
 		complaint = complaintRepository.save(complaint);
 		
 		Category category1 = categoryRepository.getById(complaint.getCategory().getId());
@@ -96,6 +122,16 @@ public class TestComplaintReposityory {
 		complaint = complaintRepository.save(complaint);
 	}
 	
+	@Test(expected=ValidationException.class)
+	public void shouldCheck_NoPerson() {
+		Complaint complaint = new Complaint("test complaint");
+		Category category = new Category("cat1");
+		category.setDepartment(new Department("dept1"));
+		complaint.setCategory(category);
+		complaint.setLocation(new Location());
+		complaint = complaintRepository.save(complaint);
+	}
+	
 	@Test
 	public void shouldLodgeComplaint_AsPending() {
 		Complaint complaint = new Complaint("Test Complaint");
@@ -103,6 +139,14 @@ public class TestComplaintReposityory {
 		category.setDepartment(new Department("dept1"));
 		complaint.setCategory(category);
 		complaint.setLocation(new Location());
+		
+		Person person = new Person();
+		person.setName("Foo Bar");
+		person.setEmail("foo@bar.com");
+		person.setLocation(new Location());
+		person = personRepository.save(person);
+		complaint.setPerson(person);
+
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
 		assertEquals(expectedComplaint.getStatus().getMode(), Mode.PENDING);
