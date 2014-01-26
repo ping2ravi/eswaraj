@@ -2,7 +2,6 @@ package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,7 @@ public class TestComplaintReposityory {
 		Complaint complaint = new Complaint("test complaint");
 		Category category = new Category("cat1");
 		category.setDepartment(new Department("dept1"));
+		complaint.setLocation(new Location("loc1"));
 		complaint.setCategory(category);
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
@@ -86,12 +86,23 @@ public class TestComplaintReposityory {
 		complaint = complaintRepository.save(complaint);
 	}
 	
+	@Test(expected=ValidationException.class)
+	public void shouldCheck_NoLocation() {
+		Complaint complaint = new Complaint("test complaint");
+		Category category = new Category("cat1");
+		category.setDepartment(new Department("dept1"));
+		complaint.setCategory(category);
+		complaint.setLocation(null);
+		complaint = complaintRepository.save(complaint);
+	}
+	
 	@Test
 	public void shouldLodgeComplaint_AsPending() {
 		Complaint complaint = new Complaint("Test Complaint");
 		Category category = new Category("cat1");
 		category.setDepartment(new Department("dept1"));
 		complaint.setCategory(category);
+		complaint.setLocation(new Location());
 		complaint = complaintRepository.save(complaint);
 		Complaint expectedComplaint = complaintRepository.getById(complaint.getId());
 		assertEquals(expectedComplaint.getStatus().getMode(), Mode.PENDING);
