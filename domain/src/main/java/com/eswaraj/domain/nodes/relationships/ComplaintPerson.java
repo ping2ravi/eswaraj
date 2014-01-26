@@ -4,11 +4,12 @@ import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
+import com.eswaraj.domain.base.BaseRelationship;
 import com.eswaraj.domain.nodes.Complaint;
 import com.eswaraj.domain.nodes.Person;
 
 @RelationshipEntity(type="LODGED_BY")
-public class ComplaintPerson {
+public class ComplaintPerson extends BaseRelationship {
 
 	private int weight;
 	
