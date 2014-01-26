@@ -12,5 +12,9 @@ import com.eswaraj.domain.base.BaseNode;
  */
 @NodeEntity
 public class Administrator extends BaseNode {
+	
+	private Person person;
+	private Post post;
+	
 
 }
