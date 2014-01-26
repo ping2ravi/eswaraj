@@ -1,7 +1,5 @@
 package com.eswaraj.domain.nodes;
 
-import org.springframework.data.neo4j.annotation.NodeEntity;
-
 import com.eswaraj.domain.base.BaseNode;
 
 /**
@@ -10,11 +8,20 @@ import com.eswaraj.domain.base.BaseNode;
  * @date Jan 18, 2014
  *
  */
-@NodeEntity
 public class Administrator extends BaseNode {
 	
 	private Person person;
 	private Post post;
-	
-
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	public Post getPost() {
+		return post;
+	}
+	public void setPost(Post post) {
+		this.post = post;
+	}
 }

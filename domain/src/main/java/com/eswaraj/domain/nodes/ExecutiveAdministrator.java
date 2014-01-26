@@ -2,8 +2,6 @@ package com.eswaraj.domain.nodes;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.eswaraj.domain.base.BaseNode;
-
 /**
  * Highest responsible person for an executive body
  * @author anuj
@@ -11,7 +9,7 @@ import com.eswaraj.domain.base.BaseNode;
  *
  */
 @NodeEntity
-public class ExecutiveAdministrator extends BaseNode {
+public class ExecutiveAdministrator extends Administrator {
 
 	private ExecutiveBody executiveBody;
 
