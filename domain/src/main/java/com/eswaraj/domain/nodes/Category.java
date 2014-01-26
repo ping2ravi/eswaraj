@@ -18,6 +18,11 @@ public class Category extends BaseNode{
     private Category parentCategory;
     private Department department;
     
+    public Category() {}
+    public Category(String name) {
+    	this.name = name;
+    }
+    
 	public String getName() {
 		return name;
 	}
