@@ -13,14 +13,19 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class Department extends BaseNode{
 
-	private String Name;
+	private String name;
 	private String description;
 	
+	public Department(){}
+	public Department(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getDescription() {
 		return description;
@@ -30,7 +35,6 @@ public class Department extends BaseNode{
 	}
 	@Override
 	public String toString() {
-		return "Department [Name=" + Name + ", description=" + description + ", getId()=" + getId() + "]";
+		return "Department [Name=" + name + ", description=" + description + ", getId()=" + getId() + "]";
 	}
-	
 }

@@ -41,7 +41,7 @@ public class TestCategoryRepository extends BaseEswarajTest{
         
         category = categoryRepository.save(category);
         
-        Category cat2 = categoryRepository.getCategoryById(category.getId());
+        Category cat2 = categoryRepository.getById(category.getId());
 
         assertNotNull(cat2);
         assertEquals(category.getName(), cat2.getName());

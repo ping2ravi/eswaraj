@@ -39,6 +39,12 @@ public class Status extends BaseNode {
 	
 	private Mode mode;
 
+	public Status(){}
+	
+	public Status(Mode mode) {
+		this.mode = mode;
+	}
+
 	public Mode getMode() {
 		return mode;
 	}
