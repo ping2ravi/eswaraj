@@ -16,6 +16,7 @@ public class AssemblyConstituency extends BaseNode{
 	private String name;
 	private District district;
 	private ParliamentConstituency parliamentConstituency;
+	private Boundary boundary;
 	
 	public String getName() {
 		return name;

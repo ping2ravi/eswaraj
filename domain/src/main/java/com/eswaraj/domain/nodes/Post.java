@@ -14,11 +14,18 @@ import com.eswaraj.domain.base.BaseNode;
 public class Post extends BaseNode {
 
 	private String name;
-
+	private ExecutiveAdministrator executiveAdministrator;
+	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public ExecutiveAdministrator getExecutiveAdministrator() {
+		return executiveAdministrator;
+	}
+	public void setExecutiveAdministrator(ExecutiveAdministrator executiveAdministrator) {
+		this.executiveAdministrator = executiveAdministrator;
 	}
 }
