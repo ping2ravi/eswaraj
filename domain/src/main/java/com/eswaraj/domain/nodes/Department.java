@@ -13,6 +13,7 @@ import com.eswaraj.domain.base.BaseNode;
 @NodeEntity
 public class Department extends BaseNode{
 
+	
 	private String name;
 	private String description;
 	

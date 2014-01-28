@@ -18,7 +18,6 @@ public class PersonValidator extends BaseValidator<Person>{
 	public void validateBeforeSave(Person person) throws ValidationException {
 		checkIfEmpty("Name", person.getName(),"Persons name can not be Null or Empty");
 		checkIfEmpty("Email", person.getEmail(),"Person's email cannot be empty or null");
-		checkIfNull("Location", person.getLocation(),"Persons location cannot be null");
 		checkLength(person.getName(), "Person name should be of length 2 and 10", 2, 10);
 		checkAcceptedCharacters(person.getName(), "Person's name can only contain alphabets", ValidCharacters.NAME);
 		checkAcceptedCharacters(person.getEmail(), "Invalid email", ValidCharacters.EMAIL);

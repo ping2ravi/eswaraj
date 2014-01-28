@@ -10,6 +10,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.Status.Mode;
+import com.eswaraj.domain.nodes.division.GeoPoint;
 
 /**
  * Complaint made by a person
@@ -24,7 +25,7 @@ public class Complaint extends BaseNode {
 	private String description;
 	@Indexed
 	@RelatedTo(type="IS_AT")
-	private Location location;
+	private GeoPoint geoPoint;
 	@RelatedTo(type="BELONGS_TO")
 	private Category category;
 	@RelatedToVia(type="LODGED_BY")
@@ -57,12 +58,6 @@ public class Complaint extends BaseNode {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Location getLocation() {
-		return location;
-	}
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 	public Category getCategory() {
 		return category;
@@ -111,9 +106,5 @@ public class Complaint extends BaseNode {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-	@Override
-	public String toString() {
-		return "Complaint [title=" + title + ", location=" + location + "]";
 	}
 }
