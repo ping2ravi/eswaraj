@@ -11,13 +11,4 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 @NodeEntity
 public class ExecutiveAdministrator extends Administrator {
 
-	private ExecutiveBody executiveBody;
-
-	public ExecutiveBody getExecutiveBody() {
-		return executiveBody;
-	}
-
-	public void setExecutiveBody(ExecutiveBody executiveBody) {
-		this.executiveBody = executiveBody;
-	}
 }

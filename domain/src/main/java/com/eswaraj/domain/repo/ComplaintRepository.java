@@ -4,7 +4,6 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
-import com.eswaraj.domain.nodes.Location;
 
 /**
  * Repository for Complaint node
@@ -16,8 +15,6 @@ public interface ComplaintRepository extends GraphRepository<Complaint>{
 
 	public Complaint getById(Long id);
 	
-	public Complaint getByLocation(Location location);
-
 	public Complaint getByCategory(Category category);
 
 }
