@@ -18,4 +18,28 @@ public class PoliticalBodyLocation extends BaseRelationship {
 	@EndNode PoliticalBody politicalBody;
 	
 	private PoliticalBodyType type;
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public PoliticalBody getPoliticalBody() {
+		return politicalBody;
+	}
+
+	public void setPoliticalBody(PoliticalBody politicalBody) {
+		this.politicalBody = politicalBody;
+	}
+
+	public PoliticalBodyType getType() {
+		return type;
+	}
+
+	public void setType(PoliticalBodyType type) {
+		this.type = type;
+	}
 }
