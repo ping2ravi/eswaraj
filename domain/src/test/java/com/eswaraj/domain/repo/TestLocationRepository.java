@@ -34,24 +34,25 @@ public class TestLocationRepository {
 	public void shouldFetch_AllExecutiveBodies() {
 		Location location = new Location();
 		location.setName("Loc1");
-		
+	
 		ExecutiveBody executiveBody1 = new ExecutiveBody();
 		executiveBody1.setName("EX1");
 		executiveBody1 = executiveBodyRepository.save(executiveBody1);
-		//location.servedBy(executiveBody1, ExecutiveBodyType.ELECTRICITY);
+		location.servedBy(executiveBody1, ExecutiveBodyType.ELECTRICITY);
 		
 		ExecutiveBody executiveBody2 = new ExecutiveBody();
 		executiveBody2.setName("EX2");
 		executiveBody2 = executiveBodyRepository.save(executiveBody2);
-		//location.servedBy(executiveBody2, ExecutiveBodyType.WATER);
+		location.servedBy(executiveBody2, ExecutiveBodyType.WATER);
 		
 		ExecutiveBody executiveBody3 = new ExecutiveBody();
 		executiveBody3.setName("EX3");
 		executiveBody3 = executiveBodyRepository.save(executiveBody3);
-		//location.servedBy(executiveBody3, ExecutiveBodyType.FIRE);
+		location.servedBy(executiveBody3, ExecutiveBodyType.FIRE);
 		
 		location = locationRepository.save(location);
 		
+		Location expectedLocation = locationRepository.getById(location.getId());
 		Set<ExecutiveBody> bodies = locationRepository.findExecutiveBodies(location);
 		
 		System.out.println(bodies.size());

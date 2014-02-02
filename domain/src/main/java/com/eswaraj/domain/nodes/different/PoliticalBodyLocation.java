@@ -19,6 +19,12 @@ public class PoliticalBodyLocation extends BaseRelationship {
 	
 	private PoliticalBodyType type;
 
+	public PoliticalBodyLocation(Location location, PoliticalBody politicalBody, PoliticalBodyType type) {
+		this.location = location;
+		this.politicalBody = politicalBody;
+		this.type = type;
+	}
+
 	public Location getLocation() {
 		return location;
 	}
