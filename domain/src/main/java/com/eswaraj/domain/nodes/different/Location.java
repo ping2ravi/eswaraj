@@ -30,7 +30,8 @@ public class Location extends BaseNode {
 	@RelatedToVia(type="PART_OF",elementClass = LocationDivision.class)
 	private Set<LocationDivision> locationDivisions;
 
-	@Fetch @RelatedToVia(type="SERVED_BY", direction= INCOMING)
+	@RelatedToVia(type="SERVED_BY", direction= INCOMING)
+	@Fetch
 	private Set<ExecutiveBodyLocation> executiveBodyLocations;
 	
 	@RelatedToVia(type="GOVERNED_BY", elementClass=PoliticalBodyLocation.class)

@@ -1,11 +1,8 @@
 package com.eswaraj.domain.nodes.different;
 
-import static com.eswaraj.domain.nodes.different.Relationships.SERVED_BY;
-
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
-import org.springframework.data.neo4j.annotation.RelationshipType;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
@@ -23,9 +20,6 @@ public class ExecutiveBodyLocation extends BaseRelationship {
 	
 	private ExecutiveBodyType type;
 	
-	@RelationshipType
-	private final Relationships relationship = SERVED_BY;
-
 	public ExecutiveBodyLocation() {}
 
 	public ExecutiveBodyLocation(Location location,ExecutiveBody executiveBody, ExecutiveBodyType type) {

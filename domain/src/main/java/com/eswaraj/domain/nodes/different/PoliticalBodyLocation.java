@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes.different;
 
 import org.springframework.data.neo4j.annotation.EndNode;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
@@ -14,8 +15,8 @@ import com.eswaraj.domain.base.BaseRelationship;
 @RelationshipEntity(type="GOVERNED_BY")
 public class PoliticalBodyLocation extends BaseRelationship {
 	
-	@EndNode Location location;
-	@StartNode PoliticalBody politicalBody;
+	@Fetch @EndNode Location location;
+	@Fetch @StartNode PoliticalBody politicalBody;
 	
 	private PoliticalBodyType type;
 
