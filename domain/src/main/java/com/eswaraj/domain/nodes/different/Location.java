@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes.different;
 
-import java.util.Collection;
+import static org.neo4j.graphdb.Direction.INCOMING;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class Location extends BaseNode {
 	@RelatedToVia(type="PART_OF",elementClass = LocationDivision.class)
 	private Set<LocationDivision> locationDivisions;
 
-	@Fetch @RelatedToVia(type="SERVED_BY", elementClass = ExecutiveBodyLocation.class)
+	@Fetch @RelatedToVia(type="SERVED_BY", direction= INCOMING)
 	private Set<ExecutiveBodyLocation> executiveBodyLocations;
 	
 	@RelatedToVia(type="GOVERNED_BY", elementClass=PoliticalBodyLocation.class)

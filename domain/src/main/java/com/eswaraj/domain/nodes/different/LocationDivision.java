@@ -9,8 +9,8 @@ import com.eswaraj.domain.base.BaseRelationship;
 @RelationshipEntity(type="PART_OF")
 public class LocationDivision extends BaseRelationship {
 	
-	@StartNode Location parent;
-	@EndNode Location child;
+	@StartNode Location child;
+	@EndNode Location parent;
 
 	private LocationType type;
 

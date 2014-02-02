@@ -18,8 +18,8 @@ import com.eswaraj.domain.base.BaseRelationship;
 @RelationshipEntity(type="SERVED_BY")
 public class ExecutiveBodyLocation extends BaseRelationship {
 	
-	@Fetch @StartNode Location location;
-	@Fetch @EndNode ExecutiveBody executiveBody;
+	@Fetch @StartNode ExecutiveBody executiveBody;
+	@Fetch @EndNode Location location;
 	
 	private ExecutiveBodyType type;
 	

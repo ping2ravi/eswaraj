@@ -14,8 +14,8 @@ import com.eswaraj.domain.base.BaseRelationship;
 @RelationshipEntity(type="GOVERNED_BY")
 public class PoliticalBodyLocation extends BaseRelationship {
 	
-	@StartNode Location location;
-	@EndNode PoliticalBody politicalBody;
+	@EndNode Location location;
+	@StartNode PoliticalBody politicalBody;
 	
 	private PoliticalBodyType type;
 
