@@ -15,8 +15,8 @@ import com.eswaraj.domain.base.BaseRelationship;
 @RelationshipEntity(type="WORKS_FOR")
 public class ExecutiveBodyAdministrator extends BaseRelationship {
 
-	@StartNode ExecutiveBody executiveBody;
-	@EndNode ExecutiveAdministrator executiveAdministrator;
+	@StartNode ExecutiveAdministrator executiveAdministrator;
+	@EndNode ExecutiveBody executiveBody;
 	private Post post;
 
 	public ExecutiveBodyAdministrator() {}

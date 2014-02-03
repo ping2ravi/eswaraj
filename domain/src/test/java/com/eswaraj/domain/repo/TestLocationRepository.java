@@ -1,8 +1,12 @@
 package com.eswaraj.domain.repo;
 
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.different.ExecutiveBody;
+import com.eswaraj.domain.nodes.different.ExecutiveBodyLocation;
 import com.eswaraj.domain.nodes.different.ExecutiveBodyRepository;
 import com.eswaraj.domain.nodes.different.ExecutiveBodyType;
 import com.eswaraj.domain.nodes.different.Location;
@@ -31,30 +36,40 @@ public class TestLocationRepository {
 	@Autowired ExecutiveBodyRepository executiveBodyRepository;
 	
 	@Test
+	@Ignore
 	public void shouldFetch_AllExecutiveBodies() {
 		Location location = new Location();
 		location.setName("Loc1");
-		
+	
 		ExecutiveBody executiveBody1 = new ExecutiveBody();
 		executiveBody1.setName("EX1");
 		executiveBody1 = executiveBodyRepository.save(executiveBody1);
-		//location.servedBy(executiveBody1, ExecutiveBodyType.ELECTRICITY);
+		location.servedBy(executiveBody1, ExecutiveBodyType.ELECTRICITY);
 		
 		ExecutiveBody executiveBody2 = new ExecutiveBody();
 		executiveBody2.setName("EX2");
 		executiveBody2 = executiveBodyRepository.save(executiveBody2);
-		//location.servedBy(executiveBody2, ExecutiveBodyType.WATER);
+		location.servedBy(executiveBody2, ExecutiveBodyType.WATER);
 		
 		ExecutiveBody executiveBody3 = new ExecutiveBody();
 		executiveBody3.setName("EX3");
 		executiveBody3 = executiveBodyRepository.save(executiveBody3);
-		//location.servedBy(executiveBody3, ExecutiveBodyType.FIRE);
+		location.servedBy(executiveBody3, ExecutiveBodyType.FIRE);
 		
 		location = locationRepository.save(location);
 		
 		Set<ExecutiveBody> bodies = locationRepository.findExecutiveBodies(location);
-		
-		System.out.println(bodies.size());
+		assertEquals(bodies.size(), 3);
 	}
 	
+	@Test
+	public void shouldFetch_AllRelationships() {
+		Location location = locationRepository.findByPropertyValue("name", "Loc1");
+		location = locationRepository.getById(new Long(69));
+		Set<ExecutiveBodyLocation> locations = location.getExecutiveBodyLocations();
+		for (ExecutiveBodyLocation executiveBodyLocation : locations) {
+			System.out.println(executiveBodyLocation.getType());
+		}
+		assertEquals(location.getExecutiveBodyLocations().size(), 3);
+	}
 }
