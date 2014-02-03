@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.different.ExecutiveBody;
+import com.eswaraj.domain.nodes.different.ExecutiveBodyLocation;
 import com.eswaraj.domain.nodes.different.ExecutiveBodyRepository;
 import com.eswaraj.domain.nodes.different.ExecutiveBodyType;
 import com.eswaraj.domain.nodes.different.Location;
@@ -65,6 +66,10 @@ public class TestLocationRepository {
 	public void shouldFetch_AllRelationships() {
 		Location location = locationRepository.findByPropertyValue("name", "Loc1");
 		location = locationRepository.getById(new Long(69));
+		Set<ExecutiveBodyLocation> locations = location.getExecutiveBodyLocations();
+		for (ExecutiveBodyLocation executiveBodyLocation : locations) {
+			System.out.println(executiveBodyLocation.getType());
+		}
 		assertEquals(location.getExecutiveBodyLocations().size(), 3);
 	}
 }
