@@ -26,8 +26,8 @@ public class Person extends BaseNode {
 	private Gender gender;
 	private String email;
 	private Collection<TelephoneNumber> numbers;
-	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
-	private Iterable<Complaint> complaints;
+//	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
+//	private Iterable<Complaint> complaints;
 	
 	public String getName() {
 		return name;

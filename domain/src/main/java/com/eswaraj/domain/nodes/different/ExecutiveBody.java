@@ -1,5 +1,5 @@
-package com.eswaraj.domain.nodes.different;
-
+package com.eswaraj.domain.nodes.different;import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
@@ -25,7 +25,11 @@ public class ExecutiveBody extends BaseNode {
 	private Boundary boundary;
 	
 	@RelatedToVia(type="WORKS_FOR", direction=Direction.INCOMING)
-	private Set<ExecutiveBodyAdministrator> employees;
+	private Collection<ExecutiveBodyAdministrator> employees;
+	
+	{
+		employees = new HashSet<>();
+	}
 	
 	public String getName() {
 		return name;
@@ -45,10 +49,16 @@ public class ExecutiveBody extends BaseNode {
 	public void setBoundary(Boundary boundary) {
 		this.boundary = boundary;
 	}
-	public Set<ExecutiveBodyAdministrator> getEmployees() {
+	public Iterable<ExecutiveBodyAdministrator> getEmployees() {
 		return employees;
 	}
 	public void setEmployees(Set<ExecutiveBodyAdministrator> employees) {
 		this.employees = employees;
+	}
+	
+	public ExecutiveBodyAdministrator employs(ExecutiveAdministrator executiveAdministrator, Post post) {
+		ExecutiveBodyAdministrator executiveBodyAdministrator = new ExecutiveBodyAdministrator(this, executiveAdministrator, post);
+		employees.add(executiveBodyAdministrator);
+		return executiveBodyAdministrator;
 	}
 }

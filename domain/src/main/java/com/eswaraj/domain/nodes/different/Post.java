@@ -15,4 +15,9 @@ public class Post {
 	private Date joined;
 	private Date left;
 	
+	public Post() {}
+	
+	public Post(String title) {
+		this.title = title;
+	}
 }
