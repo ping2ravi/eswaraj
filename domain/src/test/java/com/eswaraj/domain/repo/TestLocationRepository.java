@@ -15,11 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.ExecutiveBody;
-import com.eswaraj.domain.nodes.ExecutiveBodyLocation;
-import com.eswaraj.domain.nodes.ExecutiveBodyRepository;
 import com.eswaraj.domain.nodes.DepartmentType;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.LocationRepository;
+import com.eswaraj.domain.nodes.relationships.ExecutiveBodyLocation;
 
 /**
  * Test for Person repository

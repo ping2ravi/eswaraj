@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -6,6 +6,9 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.PoliticalBody;
+import com.eswaraj.domain.nodes.PoliticalBodyType;
 
 /**
  * Relationship for a location that is served by a political body

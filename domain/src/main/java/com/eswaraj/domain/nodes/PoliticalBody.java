@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.eswaraj.domain.base.BaseNode;
 import com.eswaraj.domain.nodes.division.Boundary;
+import com.eswaraj.domain.nodes.relationships.PoliticalBodyAdministrator;
 
 /**
  * Represents a political body like a political party

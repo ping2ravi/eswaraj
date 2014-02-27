@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -6,6 +6,9 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.Location;
 
 /**
  * Relationship for a location that is served by an executive body

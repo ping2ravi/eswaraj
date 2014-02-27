@@ -2,6 +2,8 @@ package com.eswaraj.domain.nodes;
 
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
+import com.eswaraj.domain.nodes.relationships.PoliticalBodyAdministrator;
+
 /**
  * Responsible person for a execitve body
  * @author anuj

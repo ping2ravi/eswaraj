@@ -1,10 +1,13 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.ExecutiveAdministrator;
+import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.Post;
 
 /**
  * Administrators working in an executive body

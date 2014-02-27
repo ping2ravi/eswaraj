@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.neo4j.graphdb.RelationshipType;
 
