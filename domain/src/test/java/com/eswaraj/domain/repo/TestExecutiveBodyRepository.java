@@ -12,11 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eswaraj.domain.nodes.different.ExecutiveAdministrator;
-import com.eswaraj.domain.nodes.different.ExecutiveAdministratorRepository;
-import com.eswaraj.domain.nodes.different.ExecutiveBody;
-import com.eswaraj.domain.nodes.different.ExecutiveBodyRepository;
-import com.eswaraj.domain.nodes.different.Post;
+import com.eswaraj.domain.nodes.ExecutiveAdministrator;
+import com.eswaraj.domain.nodes.ExecutiveAdministratorRepository;
+import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.ExecutiveBodyRepository;
+import com.eswaraj.domain.nodes.Post;
 
 /**
  * Test for Person repository

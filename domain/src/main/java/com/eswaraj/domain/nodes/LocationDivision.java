@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;

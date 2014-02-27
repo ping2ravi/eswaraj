@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes;
 
 public enum ExecutiveBodyType {
 	WATER,

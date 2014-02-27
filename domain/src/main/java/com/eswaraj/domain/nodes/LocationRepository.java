@@ -1,12 +1,9 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes;
 
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.repository.GraphRepository;
-
-import com.eswaraj.domain.nodes.Person;
 
 /**
  * Repo for location queries

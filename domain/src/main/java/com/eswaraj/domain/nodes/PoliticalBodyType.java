@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes;
 
 /**
  * reprents type of the political body

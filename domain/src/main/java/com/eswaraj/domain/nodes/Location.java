@@ -1,11 +1,10 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes;
 
 import static org.neo4j.graphdb.Direction.INCOMING;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -81,8 +80,8 @@ public class Location extends BaseNode {
 		this.politicalBodyLocations = politicalBodyLocations;
 	}
 
-	public ExecutiveBodyLocation servedBy(ExecutiveBody executiveBody, ExecutiveBodyType type) {
-		ExecutiveBodyLocation executiveBodyLocation = new ExecutiveBodyLocation(this, executiveBody, type);
+	public ExecutiveBodyLocation servedBy(ExecutiveBody executiveBody, Department department) {
+		ExecutiveBodyLocation executiveBodyLocation = new ExecutiveBodyLocation(this, executiveBody, department);
 		executiveBodyLocations.add(executiveBodyLocation);
 		return executiveBodyLocation;
 	}
