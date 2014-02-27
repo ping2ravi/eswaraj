@@ -1,10 +1,12 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.DivisionType;
+import com.eswaraj.domain.nodes.Location;
 
 @RelationshipEntity(type="PART_OF")
 public class LocationDivision extends BaseRelationship {
@@ -12,9 +14,9 @@ public class LocationDivision extends BaseRelationship {
 	@StartNode Location child;
 	@EndNode Location parent;
 
-	private LocationType type;
+	private DivisionType type;
 
-	public LocationDivision(Location parent, Location child, LocationType type) {
+	public LocationDivision(Location parent, Location child, DivisionType type) {
 		this.parent = parent;
 		this.child = child;
 		this.type = type;
@@ -36,11 +38,11 @@ public class LocationDivision extends BaseRelationship {
 		this.child = child;
 	}
 
-	public LocationType getType() {
+	public DivisionType getType() {
 		return type;
 	}
 
-	public void setType(LocationType type) {
+	public void setType(DivisionType type) {
 		this.type = type;
 	}
 }

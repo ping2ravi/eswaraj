@@ -1,23 +1,28 @@
 package com.eswaraj.domain.nodes;
 
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import com.eswaraj.domain.nodes.relationships.PoliticalBodyAdministrator;
 
 /**
- * Political administrator who has a party affiliation
+ * Responsible person for a execitve body
  * @author anuj
  * @date Jan 18, 2014
  *
  */
-@NodeEntity
 public class PoliticalAdministrator extends Administrator {
 	
-	private Party party;
-
-	public Party getParty() {
-		return party;
+	@RelatedTo(type="MEMBER_OF")
+	private PoliticalBody politicalBody;
+	
+	public PoliticalBody getPoliticalBody() {
+		return politicalBody;
 	}
-
-	public void setParty(Party party) {
-		this.party = party;
+	public void setPoliticalBody(PoliticalBody politicalBody) {
+		this.politicalBody = politicalBody;
+	}
+	public PoliticalBodyAdministrator memberOf(Post post) {
+		PoliticalBodyAdministrator politicalBodyAdministrator = new PoliticalBodyAdministrator(politicalBody, this , post);
+		return politicalBodyAdministrator;
 	}
 }

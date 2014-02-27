@@ -1,4 +1,4 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -6,6 +6,9 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.Department;
+import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.Location;
 
 /**
  * Relationship for a location that is served by an executive body
@@ -18,14 +21,14 @@ public class ExecutiveBodyLocation extends BaseRelationship {
 	@Fetch @StartNode ExecutiveBody executiveBody;
 	@Fetch @EndNode Location location;
 	
-	private ExecutiveBodyType type;
+	private Department department;
 	
 	public ExecutiveBodyLocation() {}
 
-	public ExecutiveBodyLocation(Location location,ExecutiveBody executiveBody, ExecutiveBodyType type) {
+	public ExecutiveBodyLocation(Location location,ExecutiveBody executiveBody, Department department) {
 		this.location = location;
 		this.executiveBody = executiveBody;
-		this.type = type;
+		this.department = department;
 	}
 
 	public Location getLocation() {
@@ -44,11 +47,11 @@ public class ExecutiveBodyLocation extends BaseRelationship {
 		this.executiveBody = executiveBody;
 	}
 
-	public ExecutiveBodyType getType() {
-		return type;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setType(ExecutiveBodyType type) {
-		this.type = type;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 }

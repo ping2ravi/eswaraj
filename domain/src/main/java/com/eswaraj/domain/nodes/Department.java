@@ -1,21 +1,18 @@
 package com.eswaraj.domain.nodes;
 
-import org.springframework.data.neo4j.annotation.NodeEntity;
-
-import com.eswaraj.domain.base.BaseNode;
 
 /**
- * A Governemnt department 
+ * A executive department 
  * @author ravi
  * @date Jan 18, 2014
  *
  */
-@NodeEntity
-public class Department extends BaseNode{
+public class Department {
 
 	
 	private String name;
 	private String description;
+	private DepartmentType type;
 	
 	public Department(){}
 	public Department(String name) {
@@ -34,8 +31,14 @@ public class Department extends BaseNode{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public DepartmentType getType() {
+		return type;
+	}
+	public void setType(DepartmentType type) {
+		this.type = type;
+	}
 	@Override
 	public String toString() {
-		return "Department [Name=" + name + ", description=" + description + ", getId()=" + getId() + "]";
+		return "Department [Name=" + name + ", description=" + description + "]";
 	}
 }

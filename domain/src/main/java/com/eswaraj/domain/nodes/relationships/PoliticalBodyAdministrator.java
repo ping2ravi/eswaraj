@@ -1,10 +1,13 @@
-package com.eswaraj.domain.nodes.different;
+package com.eswaraj.domain.nodes.relationships;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.eswaraj.domain.base.BaseRelationship;
+import com.eswaraj.domain.nodes.PoliticalAdministrator;
+import com.eswaraj.domain.nodes.PoliticalBody;
+import com.eswaraj.domain.nodes.Post;
 
 /**
  * Administrators working in a political body

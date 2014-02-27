@@ -5,9 +5,7 @@ import java.util.Date;
 
 import javax.xml.registry.infomodel.TelephoneNumber;
 
-import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.eswaraj.domain.base.BaseNode;
 import com.google.gdata.data.contacts.Gender;
@@ -26,8 +24,8 @@ public class Person extends BaseNode {
 	private Gender gender;
 	private String email;
 	private Collection<TelephoneNumber> numbers;
-	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
-	private Iterable<Complaint> complaints;
+//	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
+//	private Iterable<Complaint> complaints;
 	
 	public String getName() {
 		return name;

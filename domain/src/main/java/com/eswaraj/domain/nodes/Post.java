@@ -1,8 +1,7 @@
 package com.eswaraj.domain.nodes;
 
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import java.util.Date;
 
-import com.eswaraj.domain.base.BaseNode;
 
 /**
  * Post of the administrator
@@ -10,22 +9,39 @@ import com.eswaraj.domain.base.BaseNode;
  * @date Jan 18, 2014
  *
  */
-@NodeEntity
-public class Post extends BaseNode {
+public class Post {
 
-	private String name;
-	private ExecutiveAdministrator executiveAdministrator;
+	private String title;
+	private Date joined;
+	private Date left;
 	
-	public String getName() {
-		return name;
+	public Post() {}
+	
+	public Post(String title) {
+		this.title = title;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public String getTitle() {
+		return title;
 	}
-	public ExecutiveAdministrator getExecutiveAdministrator() {
-		return executiveAdministrator;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public void setExecutiveAdministrator(ExecutiveAdministrator executiveAdministrator) {
-		this.executiveAdministrator = executiveAdministrator;
+
+	public Date getJoined() {
+		return joined;
+	}
+
+	public void setJoined(Date joined) {
+		this.joined = joined;
+	}
+
+	public Date getLeft() {
+		return left;
+	}
+
+	public void setLeft(Date left) {
+		this.left = left;
 	}
 }
