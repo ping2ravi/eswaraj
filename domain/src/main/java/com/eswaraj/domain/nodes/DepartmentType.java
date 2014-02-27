@@ -1,6 +1,6 @@
 package com.eswaraj.domain.nodes;
 
-public enum ExecutiveBodyType {
+public enum DepartmentType {
 	WATER,
 	FIRE,
 	ELECTRICITY,
