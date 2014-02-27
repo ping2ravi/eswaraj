@@ -1,6 +1,5 @@
 package com.eswaraj.domain.nodes;
 
-import com.eswaraj.domain.base.BaseNode;
 
 /**
  * A executive department 
@@ -31,6 +30,12 @@ public class Department {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public DepartmentType getType() {
+		return type;
+	}
+	public void setType(DepartmentType type) {
+		this.type = type;
 	}
 	@Override
 	public String toString() {
