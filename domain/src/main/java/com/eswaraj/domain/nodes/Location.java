@@ -25,6 +25,7 @@ import com.eswaraj.domain.nodes.relationships.PoliticalBodyLocation;
 public class Location extends BaseNode {
 
 	private String name;
+	private LocationType type;
 	
 	@RelatedTo(type="PART_OF")
 	private Location location;
@@ -95,7 +96,7 @@ public class Location extends BaseNode {
 		return politicalBodyLocation;
 	}
 	
-	public LocationDivision partOf(Location location, LocationType type) {
+	public LocationDivision partOf(Location location, DivisionType type) {
 		LocationDivision locationDivision = new LocationDivision(this, location, type);
 		//locationDivisions.add(locationDivision);
 		return locationDivision;
