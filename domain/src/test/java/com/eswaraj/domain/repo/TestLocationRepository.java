@@ -18,7 +18,6 @@ import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.DepartmentType;
 import com.eswaraj.domain.nodes.Location;
-import com.eswaraj.domain.nodes.LocationRepository;
 import com.eswaraj.domain.nodes.relationships.ExecutiveBodyLocation;
 
 /**
