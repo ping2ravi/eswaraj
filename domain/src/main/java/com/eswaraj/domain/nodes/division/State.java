@@ -15,7 +15,9 @@ public class State extends BaseNode{
 
 	private String name;
 	private Country country;
-	
+	//@RelatedToVia(type="BELONGS_TO", direction=Direction.INCOMING)
+	//private List<StateExecutiveBody> stateExecutiveBodies;
+
 	public String getName() {
 		return name;
 	}

@@ -16,6 +16,8 @@ public class ComplaintValidator extends BaseValidator<Complaint>{
 
 	public void validateBeforeSave(Complaint complaint) throws ValidationException {
 		checkIfEmpty("Title", complaint.getTitle(), "Complaint title cannot be empty or null");
+		checkIfNull("Category", complaint.getCategory(), "Complaint needs to belong to a category and can't be null.");
+		checkIfNull("Person", complaint.getPerson(), "Complaint needs to be lodged by a Person and person can't be null.");
 	}
 
 	public void validateBeforeDelete(Complaint complaint) throws ValidationException {

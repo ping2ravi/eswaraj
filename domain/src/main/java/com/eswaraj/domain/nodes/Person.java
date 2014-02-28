@@ -22,9 +22,10 @@ public class Person extends BaseNode {
 	private String name;
 	private Date dob;
 	private Gender gender;
-	private Location location;
 	private String email;
 	private Collection<TelephoneNumber> numbers;
+//	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
+//	private Iterable<Complaint> complaints;
 	
 	public String getName() {
 		return name;
@@ -43,12 +44,6 @@ public class Person extends BaseNode {
 	}
 	public void setGender(Gender gender) {
 		this.gender = gender;
-	}
-	public Location getLocation() {
-		return location;
-	}
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 	public String getEmail() {
 		return email;

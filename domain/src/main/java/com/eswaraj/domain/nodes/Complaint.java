@@ -2,11 +2,15 @@ package com.eswaraj.domain.nodes;
 
 import java.util.Collection;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.eswaraj.domain.base.BaseNode;
+import com.eswaraj.domain.nodes.Status.Mode;
+import com.eswaraj.domain.nodes.division.GeoPoint;
 
 /**
  * Complaint made by a person
@@ -21,19 +25,28 @@ public class Complaint extends BaseNode {
 	private String description;
 	@Indexed
 	@RelatedTo(type="IS_AT")
-	private Location location;
+	private GeoPoint geoPoint;
 	@RelatedTo(type="BELONGS_TO")
 	private Category category;
-	@RelatedTo(type="CREATED_BY")
+	@RelatedToVia(type="LODGED_BY")
 	private Person person;
-	@RelatedTo(type="SERVED_BY")
+	@RelatedToVia(type="SERVED_BY")
 	private Administrator administrator;
+	@RelatedTo(type="IS_IN")
+	@Fetch
+	private Status status;
+	@RelatedTo(type="ENDORSED_BY", elementClass=Person.class)
 	private Collection<Person> endorsements;
+	@RelatedTo(type="SERVED_BY", elementClass=Administrator.class)
 	private Collection<Administrator> administrators;
 	private Collection<Photo> photos;
 	private Collection<Video> videos;
-	private Status status;
 	
+	public Complaint(){}
+	public Complaint(String title) {
+		this.title = title;
+		this.status = new Status(Mode.PENDING);
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -45,12 +58,6 @@ public class Complaint extends BaseNode {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Location getLocation() {
-		return location;
-	}
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 	public Category getCategory() {
 		return category;
@@ -94,8 +101,10 @@ public class Complaint extends BaseNode {
 	public void setVideos(Collection<Video> videos) {
 		this.videos = videos;
 	}
-	@Override
-	public String toString() {
-		return "Complaint [title=" + title + ", location=" + location + "]";
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }
