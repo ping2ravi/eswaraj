@@ -15,8 +15,9 @@ public class Department {
 	private DepartmentType type;
 	
 	public Department(){}
-	public Department(String name) {
+	public Department(String name, DepartmentType type) {
 		this.name = name;
+		this.type = type;
 	}
 	
 	public String getName() {

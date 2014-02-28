@@ -1,6 +1,7 @@
 package com.eswaraj.domain.nodes;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -31,16 +32,16 @@ public class Complaint extends BaseNode {
 	@RelatedToVia(type="LODGED_BY")
 	private Person person;
 	@RelatedToVia(type="SERVED_BY")
-	private Administrator administrator;
+	private ExecutiveAdministrator administrator;
 	@RelatedTo(type="IS_IN")
 	@Fetch
 	private Status status;
 	@RelatedTo(type="ENDORSED_BY", elementClass=Person.class)
-	private Collection<Person> endorsements;
+	private Set<Person> endorsements;
 	@RelatedTo(type="SERVED_BY", elementClass=Administrator.class)
-	private Collection<Administrator> administrators;
-	private Collection<Photo> photos;
-	private Collection<Video> videos;
+	private Set<PoliticalAdministrator> servants;
+	private Set<Photo> photos;
+	private Set<Video> videos;
 	
 	public Complaint(){}
 	public Complaint(String title) {
@@ -59,6 +60,12 @@ public class Complaint extends BaseNode {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public GeoPoint getGeoPoint() {
+		return geoPoint;
+	}
+	public void setGeoPoint(GeoPoint geoPoint) {
+		this.geoPoint = geoPoint;
+	}
 	public Category getCategory() {
 		return category;
 	}
@@ -71,40 +78,40 @@ public class Complaint extends BaseNode {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public Administrator getAdministrator() {
+	public ExecutiveAdministrator getAdministrator() {
 		return administrator;
 	}
-	public void setAdministrator(Administrator administrator) {
+	public void setAdministrator(ExecutiveAdministrator administrator) {
 		this.administrator = administrator;
-	}
-	public Collection<Person> getEndorsements() {
-		return endorsements;
-	}
-	public void setEndorsements(Collection<Person> endorsements) {
-		this.endorsements = endorsements;
-	}
-	public Collection<Administrator> getAdministrators() {
-		return administrators;
-	}
-	public void setAdministrators(Collection<Administrator> administrators) {
-		this.administrators = administrators;
-	}
-	public Collection<Photo> getPhotos() {
-		return photos;
-	}
-	public void setPhotos(Collection<Photo> photos) {
-		this.photos = photos;
-	}
-	public Collection<Video> getVideos() {
-		return videos;
-	}
-	public void setVideos(Collection<Video> videos) {
-		this.videos = videos;
 	}
 	public Status getStatus() {
 		return status;
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public Set<Person> getEndorsements() {
+		return endorsements;
+	}
+	public void setEndorsements(Set<Person> endorsements) {
+		this.endorsements = endorsements;
+	}
+	public Set<PoliticalAdministrator> getServants() {
+		return servants;
+	}
+	public void setServants(Set<PoliticalAdministrator> servants) {
+		this.servants = servants;
+	}
+	public Set<Photo> getPhotos() {
+		return photos;
+	}
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
+	public Set<Video> getVideos() {
+		return videos;
+	}
+	public void setVideos(Set<Video> videos) {
+		this.videos = videos;
 	}
 }

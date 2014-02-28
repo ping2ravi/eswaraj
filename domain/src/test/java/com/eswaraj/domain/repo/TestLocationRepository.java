@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.DepartmentType;
 import com.eswaraj.domain.nodes.Location;
@@ -43,12 +44,15 @@ public class TestLocationRepository {
 		ExecutiveBody executiveBody1 = new ExecutiveBody();
 		executiveBody1.setName("EX1");
 		executiveBody1 = executiveBodyRepository.save(executiveBody1);
-		location.servedBy(executiveBody1, DepartmentType.ELECTRICITY);
+		
+		Department elec = new Department("Electricity Board",DepartmentType.ELECTRICITY);
+		location.servedBy(executiveBody1, elec);
 		
 		ExecutiveBody executiveBody2 = new ExecutiveBody();
 		executiveBody2.setName("EX2");
 		executiveBody2 = executiveBodyRepository.save(executiveBody2);
-		location.servedBy(executiveBody2, DepartmentType.WATER);
+		Department water = new Department("Water Board",DepartmentType.WATER);
+		location.servedBy(executiveBody2, water);
 		
 		ExecutiveBody executiveBody3 = new ExecutiveBody();
 		executiveBody3.setName("EX3");
