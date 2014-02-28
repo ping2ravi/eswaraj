@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +69,12 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category = categoryRepository.save(category);
  		
         Category expected = categoryRepository.getById(category.getId());
+        Category parentExpected = categoryRepository.getById(expected.getParentCategory().getId());
+        
+        
         assertNotNull(expected);
         assertNotNull(expected.getParentCategory());
-        assertEquals(expected.getParentCategory().getName(), parent.getName());
-        assertEquals(expected.getParentCategory().getDescription(), parent.getDescription());
+        assertEquals(parentExpected.getName(), parent.getName());
+        assertEquals(parentExpected.getDescription(), parent.getDescription());
 	}
 }
