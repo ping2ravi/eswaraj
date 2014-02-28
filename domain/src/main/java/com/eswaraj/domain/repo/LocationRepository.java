@@ -1,9 +1,13 @@
-package com.eswaraj.domain.nodes;
+package com.eswaraj.domain.repo;
 
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
+
+import com.eswaraj.domain.nodes.ExecutiveBody;
+import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.PoliticalBody;
 
 /**
  * Repo for location queries

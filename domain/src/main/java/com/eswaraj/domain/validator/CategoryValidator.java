@@ -14,18 +14,10 @@ public class CategoryValidator extends BaseValidator<Category>{
 		super(Category.class, validationManager);
 	}
 
-	@Override
 	public void validateBeforeSave(Category category) throws ValidationException {
-		checkIfEmpty("Name", category.getName(),"Category name can not be Null or Empty");
-		checkIfNull("Department", category.getDepartment(),"Department Can not be null for category");
+		checkIfNull("Name", category.getName(), "Category name can't be null.");
 	}
 
-	@Override
 	public void validateBeforeDelete(Category category) throws ValidationException {
-		// TODO Auto-generated method stub
-		
 	}
-
-	
-
 }
