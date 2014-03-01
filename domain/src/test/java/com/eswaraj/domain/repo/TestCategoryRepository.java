@@ -6,13 +6,11 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
-import com.eswaraj.domain.nodes.Department;
 import com.eswaraj.domain.validator.exception.ValidationException;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })

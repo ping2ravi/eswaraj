@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
@@ -24,8 +25,10 @@ import com.eswaraj.domain.nodes.relationships.PoliticalBodyLocation;
 @NodeEntity
 public class Location extends BaseNode {
 
+	@Indexed
 	private String name;
 	private LocationType type;
+	private LocationData data;
 	
 	@RelatedTo(type="PART_OF")
 	private Location location;
@@ -92,13 +95,29 @@ public class Location extends BaseNode {
 
 	public PoliticalBodyLocation governedBy(PoliticalBody politicalBody, PoliticalBodyType type) {
 		PoliticalBodyLocation politicalBodyLocation = new PoliticalBodyLocation(this, politicalBody, type);
-		//politicalBodyLocations.add(politicalBodyLocation);
+		politicalBodyLocations.add(politicalBodyLocation);
 		return politicalBodyLocation;
 	}
 	
 	public LocationDivision partOf(Location location, DivisionType type) {
 		LocationDivision locationDivision = new LocationDivision(this, location, type);
-		//locationDivisions.add(locationDivision);
+		locationDivisions.add(locationDivision);
 		return locationDivision;
+	}
+
+	public LocationType getType() {
+		return type;
+	}
+
+	public void setType(LocationType type) {
+		this.type = type;
+	}
+
+	public LocationData getData() {
+		return data;
+	}
+
+	public void setData(LocationData data) {
+		this.data = data;
 	}
 }

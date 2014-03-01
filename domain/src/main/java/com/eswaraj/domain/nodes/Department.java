@@ -1,5 +1,9 @@
 package com.eswaraj.domain.nodes;
 
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
+import com.eswaraj.domain.base.BaseNode;
+
 
 /**
  * A executive department 
@@ -7,7 +11,8 @@ package com.eswaraj.domain.nodes;
  * @date Jan 18, 2014
  *
  */
-public class Department {
+@NodeEntity
+public class Department extends BaseNode {
 
 	
 	private String name;

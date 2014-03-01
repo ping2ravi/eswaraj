@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
-import com.eswaraj.domain.nodes.Department;
-import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Status.Mode;
 import com.eswaraj.domain.nodes.division.GeoPoint;

@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.validator.exception.ValidationException;
 import com.google.gdata.data.contacts.Gender;
@@ -35,7 +34,6 @@ public class TestPersonRepository {
 		person.setName("Foo Bar");
 		person.setEmail("foo@bar.com");
 		person.setGender(new Gender(Value.MALE));
-		person.setLocation(new Location());
 		person = personRespository.save(person);
 		Person expectedPerson = personRespository.getPersonById(person.getId());
 		assertEquals(expectedPerson.getName(), person.getName());
@@ -60,7 +58,6 @@ public class TestPersonRepository {
 	public void shouldCheckEmptyEmail() {
 		Person person = new Person();
 		person.setName("foo bar");
-		person.setLocation(new Location());
 		person = personRespository.save(person);
 	}
 	
@@ -68,7 +65,6 @@ public class TestPersonRepository {
 	public void shouldCheckNameLength() {
 		Person person = new Person();
 		person.setEmail("foo@bar.com");
-		person.setLocation(new Location());
 		person.setName("f");
 		person = personRespository.save(person);
 	}
@@ -77,7 +73,6 @@ public class TestPersonRepository {
 	public void shouldCheckValidCharacters_InName() {
 		Person person = new Person();
 		person.setEmail("foo@bar.com");
-		person.setLocation(new Location());
 		person.setName("Ff12 hhh h");
 		person = personRespository.save(person);
 	}
@@ -86,7 +81,6 @@ public class TestPersonRepository {
 	public void shouldCheckValidCharacters_InEmail() {
 		Person person = new Person();
 		person.setEmail("foo@bar");
-		person.setLocation(new Location());
 		person.setName("Ff hhh");
 		person = personRespository.save(person);
 	}

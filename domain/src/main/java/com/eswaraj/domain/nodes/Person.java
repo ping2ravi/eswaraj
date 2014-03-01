@@ -11,7 +11,7 @@ import com.eswaraj.domain.base.BaseNode;
 import com.google.gdata.data.contacts.Gender;
 
 /**
- * Person making or resolving the complaint
+ * Represents a person making or resolving the complaint
  * @author anuj
  * @date Jan 18, 2014
  *
@@ -23,9 +23,8 @@ public class Person extends BaseNode {
 	private Date dob;
 	private Gender gender;
 	private String email;
+	//TODO impelemnt telephone number
 	private Collection<TelephoneNumber> numbers;
-//	@RelatedToVia(type="LODGED_BY", direction=Direction.INCOMING)
-//	private Iterable<Complaint> complaints;
 	
 	public String getName() {
 		return name;

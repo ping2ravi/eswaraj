@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Department;
-import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.DepartmentType;
+import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.relationships.ExecutiveBodyLocation;
 
@@ -35,7 +33,6 @@ public class TestLocationRepository {
 	@Autowired ExecutiveBodyRepository executiveBodyRepository;
 	
 	@Test
-	@Ignore
 	public void shouldFetch_AllExecutiveBodies() {
 		Location location = new Location();
 		location.setName("Loc1");
@@ -56,7 +53,11 @@ public class TestLocationRepository {
 		ExecutiveBody executiveBody3 = new ExecutiveBody();
 		executiveBody3.setName("EX3");
 		executiveBody3 = executiveBodyRepository.save(executiveBody3);
-		location.servedBy(executiveBody3, DepartmentType.FIRE);
+		
+		Department fire = new Department("Fire Board",DepartmentType.WATER);
+		location.servedBy(executiveBody2, fire);
+		
+		location.servedBy(executiveBody3, fire);
 		
 		location = locationRepository.save(location);
 		
@@ -67,11 +68,7 @@ public class TestLocationRepository {
 	@Test
 	public void shouldFetch_AllRelationships() {
 		Location location = locationRepository.findByPropertyValue("name", "Loc1");
-		location = locationRepository.getById(new Long(69));
 		Set<ExecutiveBodyLocation> locations = location.getExecutiveBodyLocations();
-		for (ExecutiveBodyLocation executiveBodyLocation : locations) {
-			System.out.println(executiveBodyLocation.getType());
-		}
-		assertEquals(location.getExecutiveBodyLocations().size(), 3);
+		assertEquals(locations.size(), 3);
 	}
 }
