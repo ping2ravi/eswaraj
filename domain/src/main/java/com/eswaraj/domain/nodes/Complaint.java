@@ -1,6 +1,5 @@
 package com.eswaraj.domain.nodes;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -27,11 +26,19 @@ public class Complaint extends BaseNode {
 	@Indexed
 	@RelatedTo(type="IS_AT")
 	private GeoPoint geoPoint;
+	private Location location;
+	private Location village;
+	private Location ward;
+	private Location city;
+	private Location district;
+	private Location state;
+	private Location country;
+	
 	@RelatedTo(type="BELONGS_TO")
 	private Category category;
-	@RelatedToVia(type="LODGED_BY")
+	@RelatedTo(type="LODGED_BY")
 	private Person person;
-	@RelatedToVia(type="SERVED_BY")
+	@RelatedTo(type="SERVED_BY")
 	private ExecutiveAdministrator administrator;
 	@RelatedTo(type="IS_IN")
 	@Fetch

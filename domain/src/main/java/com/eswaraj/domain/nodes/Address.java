@@ -18,6 +18,7 @@ public class Address extends BaseNode {
 	private Location district;
 	private Location state;
 	private Location country;
+	
 	public String getLine1() {
 		return line1;
 	}
