@@ -20,6 +20,7 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 public class TestCategoryRepository extends BaseEswarajTest{
 
 	@Autowired CategoryRepository categoryRepository;
+	@Autowired DepartmentRepository departmentRepository;
 	
 	/**
 	 * Simple test to create a category
@@ -30,6 +31,14 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category.setName(randomAlphaString(32));
         category.setDescription(randomAlphaString(64));
         
+        Department department = new Department();
+        department.setName(randomAlphaString(32));
+        department.setDescription(randomAlphaString(64));
+        department = departmentRepository.save(department);
+        
+        category.setDepartment(department);
+        
+        
         category = categoryRepository.save(category);
         
         Category cat2 = categoryRepository.getById(category.getId());
@@ -37,6 +46,11 @@ public class TestCategoryRepository extends BaseEswarajTest{
         assertNotNull(cat2);
         assertEquals(category.getName(), cat2.getName());
         assertEquals(category.getDescription(), cat2.getDescription());
+
+        
+        Department department2 = departmentRepository.getById(category.getDepartment().getId());
+        assertNotNull(department2);
+        
     }
 	
 	/**
@@ -48,29 +62,30 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category.setName(null);
         category.setDescription(randomAlphaString(64));
         
+        Department department = new Department();
+        department.setName(randomAlphaString(32));
+        department.setDescription(randomAlphaString(64));
+        department = departmentRepository.save(department);
+        
+        category.setDepartment(department);
+        
+        
         category = categoryRepository.save(category);
         
     }
 	
-	@Test
-	public void testParentCategory() {
-		Category category = new Category();
-        category.setName(randomAlphaNumericString(32));
-        category.setDescription(randomAlphaString(64));
+	/**
+	 * Simple test to create a category where Department is null
+	 */
+	@Test(expected=ValidationException.class)
+    public void basicSaveCategoryFailTest_DepartmentIsNull() {
+        Category category = new Category();
+        category.setName(randomAlphaString(32));
         category.setDescription(randomAlphaString(64));
         
-        Category parent = new Category();
-        parent.setName(randomAlphaNumericString(32));
-        parent.setDescription(randomAlphaString(64));
-        parent = categoryRepository.save(parent);
-        
-        category.setParentCategory(parent);
+        category.setDepartment(null);
         category = categoryRepository.save(category);
- 		
-        Category expected = categoryRepository.getById(category.getId());
-        assertNotNull(expected);
-        assertNotNull(expected.getParentCategory());
-        assertEquals(expected.getParentCategory().getName(), parent.getName());
-        assertEquals(expected.getParentCategory().getDescription(), parent.getDescription());
-	}
+        
+    }
+
 }
