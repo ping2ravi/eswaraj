@@ -36,8 +36,6 @@ public class TestCategoryRepository extends BaseEswarajTest{
         department.setDescription(randomAlphaString(64));
         department = departmentRepository.save(department);
         
-        category.setDepartment(department);
-        
         
         category = categoryRepository.save(category);
         
@@ -47,9 +45,6 @@ public class TestCategoryRepository extends BaseEswarajTest{
         assertEquals(category.getName(), cat2.getName());
         assertEquals(category.getDescription(), cat2.getDescription());
 
-        
-        Department department2 = departmentRepository.getById(category.getDepartment().getId());
-        assertNotNull(department2);
         
     }
 	
@@ -67,9 +62,6 @@ public class TestCategoryRepository extends BaseEswarajTest{
         department.setDescription(randomAlphaString(64));
         department = departmentRepository.save(department);
         
-        category.setDepartment(department);
-        
-        
         category = categoryRepository.save(category);
         
     }
@@ -83,7 +75,6 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category.setName(randomAlphaString(32));
         category.setDescription(randomAlphaString(64));
         
-        category.setDepartment(null);
         category = categoryRepository.save(category);
         
     }

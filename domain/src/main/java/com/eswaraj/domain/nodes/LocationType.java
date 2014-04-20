@@ -3,7 +3,10 @@ package com.eswaraj.domain.nodes;
 public enum LocationType {
 	COUNTRY,
 	STATE,
+	PARLIAMENT_CONSTITUENCY,
 	DISTRICT,
+	ASSEMBLY_CONSTITUENCY,
+	MUNCIPLE,
 	CITY,
 	VILLAGE,
 	WARD,

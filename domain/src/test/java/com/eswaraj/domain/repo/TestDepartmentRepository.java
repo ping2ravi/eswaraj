@@ -32,10 +32,6 @@ public class TestDepartmentRepository extends BaseEswarajTest{
         
         department = departmentRepository.save(department);
         
-        Department department2 = departmentRepository.getById(department.getId());
-        assertNotNull(department2);
-        assertEquals(department.getName(), department2.getName());
-        assertEquals(department.getDescription(), department2.getDescription());
         
     }
 	

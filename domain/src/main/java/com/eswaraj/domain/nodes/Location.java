@@ -1,19 +1,10 @@
 package com.eswaraj.domain.nodes;
 
-import static org.neo4j.graphdb.Direction.INCOMING;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.eswaraj.domain.base.BaseNode;
-import com.eswaraj.domain.nodes.relationships.ExecutiveBodyLocation;
-import com.eswaraj.domain.nodes.relationships.LocationDivision;
-import com.eswaraj.domain.nodes.relationships.PoliticalBodyLocation;
 
 /**
  * Location of the complaint
@@ -24,26 +15,14 @@ import com.eswaraj.domain.nodes.relationships.PoliticalBodyLocation;
 @NodeEntity
 public class Location extends BaseNode {
 
+	@Indexed
 	private String name;
-	private LocationType type;
+	@Indexed
+	private LocationType locationType;
 	
 	@RelatedTo(type="PART_OF")
-	private Location location;
+	private Location parentLocation;
 	
-	@RelatedToVia(type="PART_OF",elementClass = LocationDivision.class)
-	private Set<LocationDivision> locationDivisions;
-
-	@RelatedToVia(type="SERVED_BY", direction= INCOMING)
-	@Fetch
-	private Set<ExecutiveBodyLocation> executiveBodyLocations;
-	
-	@RelatedToVia(type="GOVERNED_BY", elementClass=PoliticalBodyLocation.class)
-	private Set<PoliticalBodyLocation> politicalBodyLocations;
-	
-	{
-		executiveBodyLocations = new HashSet<>();
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -52,53 +31,26 @@ public class Location extends BaseNode {
 		this.name = name;
 	}
 
-	public Location getLocation() {
-		return location;
+	public LocationType getLocationType() {
+		return locationType;
 	}
 
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setLocationType(LocationType locationType) {
+		this.locationType = locationType;
 	}
 
-	public Set<LocationDivision> getLocationDivisions() {
-		return locationDivisions;
+	public Location getParentLocation() {
+		return parentLocation;
 	}
 
-	public void setLocationDivisions(Set<LocationDivision> locationDivisions) {
-		this.locationDivisions = locationDivisions;
+	public void setParentLocation(Location parentLocation) {
+		this.parentLocation = parentLocation;
 	}
 
-	public Set<ExecutiveBodyLocation> getExecutiveBodyLocations() {
-		return executiveBodyLocations;
+	@Override
+	public String toString() {
+		return "Location [name=" + name + ", locationType=" + locationType + ", parentLocation=" + parentLocation + ", getId()=" + getId() + "]";
 	}
 
-	public void setExecutiveBodyLocations(Set<ExecutiveBodyLocation> executiveBodyLocations) {
-		this.executiveBodyLocations = executiveBodyLocations;
-	}
-
-	public Set<PoliticalBodyLocation> getPoliticalBodyLocations() {
-		return politicalBodyLocations;
-	}
-
-	public void setPoliticalBodyLocations(Set<PoliticalBodyLocation> politicalBodyLocations) {
-		this.politicalBodyLocations = politicalBodyLocations;
-	}
-
-	public ExecutiveBodyLocation servedBy(ExecutiveBody executiveBody, Department department) {
-		ExecutiveBodyLocation executiveBodyLocation = new ExecutiveBodyLocation(this, executiveBody, department);
-		executiveBodyLocations.add(executiveBodyLocation);
-		return executiveBodyLocation;
-	}
-
-	public PoliticalBodyLocation governedBy(PoliticalBody politicalBody, PoliticalBodyType type) {
-		PoliticalBodyLocation politicalBodyLocation = new PoliticalBodyLocation(this, politicalBody, type);
-		//politicalBodyLocations.add(politicalBodyLocation);
-		return politicalBodyLocation;
-	}
 	
-	public LocationDivision partOf(Location location, DivisionType type) {
-		LocationDivision locationDivision = new LocationDivision(this, location, type);
-		//locationDivisions.add(locationDivision);
-		return locationDivision;
-	}
 }
