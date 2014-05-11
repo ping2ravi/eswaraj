@@ -12,7 +12,7 @@ public interface EswarajMobileService {
 	 * @param longitude
 	 * @return
 	 */
-	LocationInfo getLocationInfo(Double lattitude, Double longitude);
+	//LocationInfo getLocationInfo(Double lattitude, Double longitude);
 	
 	
 	
@@ -29,5 +29,5 @@ public interface EswarajMobileService {
 	 * @param complaint
 	 * @return
 	 */
-	ComplaintInfo saveComplaint(Complaint complaint);
+	//ComplaintInfo saveComplaint(Complaint complaint);
 }

@@ -16,6 +16,9 @@ public class LocationDivision extends BaseRelationship {
 
 	private DivisionType type;
 
+	public LocationDivision() {
+	}
+	
 	public LocationDivision(Location parent, Location child, DivisionType type) {
 		this.parent = parent;
 		this.child = child;
@@ -44,5 +47,10 @@ public class LocationDivision extends BaseRelationship {
 
 	public void setType(DivisionType type) {
 		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "LocationDivision [child=" + child + ", parent=" + parent + ", type=" + type + ", getId()=" + getId() + "]";
 	}
 }

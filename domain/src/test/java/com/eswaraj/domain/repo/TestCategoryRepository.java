@@ -3,6 +3,7 @@ package com.eswaraj.domain.repo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,11 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class TestCategoryRepository extends BaseEswarajTest{
+@Ignore
+public class TestCategoryRepository extends BaseNeo4jEswarajTest{
 
 	@Autowired CategoryRepository categoryRepository;
+	@Autowired DepartmentRepository departmentRepository;
 	
 	/**
 	 * Simple test to create a category
@@ -31,6 +34,12 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category.setName(randomAlphaString(32));
         category.setDescription(randomAlphaString(64));
         
+        Department department = new Department();
+        department.setName(randomAlphaString(32));
+        department.setDescription(randomAlphaString(64));
+        department = departmentRepository.save(department);
+        
+        
         category = categoryRepository.save(category);
         
         Category cat2 = categoryRepository.getById(category.getId());
@@ -38,6 +47,8 @@ public class TestCategoryRepository extends BaseEswarajTest{
         assertNotNull(cat2);
         assertEquals(category.getName(), cat2.getName());
         assertEquals(category.getDescription(), cat2.getDescription());
+
+        
     }
 	
 	/**
@@ -49,32 +60,26 @@ public class TestCategoryRepository extends BaseEswarajTest{
         category.setName(null);
         category.setDescription(randomAlphaString(64));
         
+        Department department = new Department();
+        department.setName(randomAlphaString(32));
+        department.setDescription(randomAlphaString(64));
+        department = departmentRepository.save(department);
+        
         category = categoryRepository.save(category);
         
     }
 	
-	@Test
-	public void testParentCategory() {
-		Category category = new Category();
-        category.setName(randomAlphaNumericString(32));
-        category.setDescription(randomAlphaString(64));
+	/**
+	 * Simple test to create a category where Department is null
+	 */
+	@Test(expected=ValidationException.class)
+    public void basicSaveCategoryFailTest_DepartmentIsNull() {
+        Category category = new Category();
+        category.setName(randomAlphaString(32));
         category.setDescription(randomAlphaString(64));
         
-        Category parent = new Category();
-        parent.setName(randomAlphaNumericString(32));
-        parent.setDescription(randomAlphaString(64));
-        parent = categoryRepository.save(parent);
-        
-        category.setParentCategory(parent);
         category = categoryRepository.save(category);
- 		
-        Category expected = categoryRepository.getById(category.getId());
-        Category parentExpected = categoryRepository.getById(expected.getParentCategory().getId());
         
-        
-        assertNotNull(expected);
-        assertNotNull(expected.getParentCategory());
-        assertEquals(parentExpected.getName(), parent.getName());
-        assertEquals(parentExpected.getDescription(), parent.getDescription());
-	}
+    }
+
 }

@@ -3,6 +3,7 @@ package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class TestVideoRepository {
 
 	@Autowired VideoRepository videoRepository;

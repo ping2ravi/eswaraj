@@ -1,12 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>eswaraj-core</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
 	<name>ESwaraj Core</name>
 	<description>Core for eswaraj</description>
 	<packaging>jar</packaging>
-	
+
 	<parent>
 		<groupId>com.eswaraj</groupId>
 		<artifactId>eswaraj-parent</artifactId>
@@ -18,7 +16,7 @@
 		<!-- eswaraj -->
 
 		<!-- Persistence -->
-		
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -29,6 +27,18 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.0-beta9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj.web</groupId>
+			<artifactId>eswaraj-dto</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-domain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-test</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
