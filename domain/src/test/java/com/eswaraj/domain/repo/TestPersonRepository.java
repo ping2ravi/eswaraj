@@ -3,6 +3,7 @@ package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.google.gdata.data.contacts.Gender.Value;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class TestPersonRepository {
 
 	@Autowired PersonRepository personRespository;

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.eswaraj.domain.nodes.Post;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class TestExecutiveBodyRepository {
 
 	@Autowired ExecutiveBodyRepository executiveBodyRepository;

@@ -1,18 +1,20 @@
 package com.eswaraj.domain.repo;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Collection;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Location;
-import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.validator.exception.ValidationException;
+import com.eswaraj.web.dto.LocationType;
 
 /**
  * Test for Location repository
@@ -30,7 +32,6 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 	 */
 	@Test
 	public void test01_LocationRepository(){
-		
 		final String countryName = randomAlphaString(10);
 		
 		Location countryLocation = createLocation(countryName, LocationType.COUNTRY, null);

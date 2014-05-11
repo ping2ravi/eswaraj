@@ -1,4 +1,4 @@
-package com.eswaraj.domain.repo;
+package com.eswaraj.base;
 
 import static org.junit.Assert.fail;
 

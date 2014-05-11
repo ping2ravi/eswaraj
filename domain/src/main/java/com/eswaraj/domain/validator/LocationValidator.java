@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.eswaraj.domain.nodes.Location;
-import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.validator.exception.ValidationException;
+import com.eswaraj.web.dto.LocationType;
 import com.google.gdata.util.common.base.StringUtil;
 
 @Component

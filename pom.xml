@@ -255,4 +255,11 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<modules>
+	    <module>dto</module>
+	    <module>domain</module>
+	    <module>core</module>
+	    <module>api</module>
+	    <module>web</module>
+	</modules>
 </project>

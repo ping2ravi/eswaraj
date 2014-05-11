@@ -1,8 +1,6 @@
 package com.eswaraj.domain.repo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +9,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Department;
-import com.eswaraj.domain.repo.DepartmentRepository;
 import com.eswaraj.domain.validator.exception.ValidationException;
 
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class TestDepartmentRepository extends BaseEswarajTest{
+@Ignore
+public class TestDepartmentRepository extends BaseNeo4jEswarajTest{
 
 	@Autowired DepartmentRepository departmentRepository;
 	

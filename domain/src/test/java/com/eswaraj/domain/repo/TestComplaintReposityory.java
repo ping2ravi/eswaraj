@@ -2,6 +2,7 @@ package com.eswaraj.domain.repo;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.domain.nodes.Category;
 import com.eswaraj.domain.nodes.Complaint;
-import com.eswaraj.domain.nodes.Department;
-import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.nodes.Person;
 import com.eswaraj.domain.nodes.Status.Mode;
 import com.eswaraj.domain.validator.exception.ValidationException;
@@ -27,6 +26,7 @@ import com.eswaraj.domain.validator.exception.ValidationException;
 @ContextConfiguration(locations = { "classpath:eswaraj-domain-test.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
+@Ignore
 public class TestComplaintReposityory {
 
 	@Autowired ComplaintRepository complaintRepository;

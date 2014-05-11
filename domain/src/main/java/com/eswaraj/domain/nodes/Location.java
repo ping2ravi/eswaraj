@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
+import com.eswaraj.web.dto.LocationType;
 
 /**
  * Location of the complaint
@@ -23,6 +24,10 @@ public class Location extends BaseNode {
 	@RelatedTo(type="PART_OF")
 	private Location parentLocation;
 	
+	private Double lattitude;
+	
+	private Double longitude;
+
 	public String getName() {
 		return name;
 	}
@@ -45,6 +50,22 @@ public class Location extends BaseNode {
 
 	public void setParentLocation(Location parentLocation) {
 		this.parentLocation = parentLocation;
+	}
+
+	public Double getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(Double lattitude) {
+		this.lattitude = lattitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	@Override
