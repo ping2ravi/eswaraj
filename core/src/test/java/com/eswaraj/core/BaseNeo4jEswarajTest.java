@@ -1,14 +1,13 @@
 package com.eswaraj.core;
 
-import org.junit.After;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
