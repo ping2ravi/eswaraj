@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
@@ -22,6 +23,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	}
 
 	@After
+	@Transactional
 	public void destroyTest(){
 		if(testObjectContextManager != null){
 			testObjectContextManager.clearAllObjectsCreatdDuringTest();
