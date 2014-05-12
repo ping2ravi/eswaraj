@@ -4,6 +4,8 @@ import org.junit.After;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +20,25 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	@Autowired Neo4jTemplate neo4jTemplate;
 	@Autowired(required=false) TestObjectContextManager testObjectContextManager;
 
+	@Autowired
+	private GraphDatabaseService graphDb;
+	
 	@Before
 	public void init(){
 	}
 
 	@After
-	@Transactional
 	public void destroyTest(){
 		if(testObjectContextManager != null){
-			testObjectContextManager.clearAllObjectsCreatdDuringTest();
+			Transaction txn = graphDb.beginTx();
+			try{
+				testObjectContextManager.clearAllObjectsCreatdDuringTest();
+				txn.success();
+			}catch(Exception ex){
+				txn.failure();
+			}finally{
+				txn.finish();
+			}
 		}
 	}
 	
