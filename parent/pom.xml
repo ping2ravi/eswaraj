@@ -241,7 +241,7 @@
 				<artifactId>aspectjrt</artifactId>
 				<version>${org.aspectj.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjweaver</artifactId>
@@ -259,8 +259,8 @@
 				<version>2.6</version>
 				<configuration>
 					<formats>
-                        <format>xml</format>
-                    </formats>
+						<format>xml</format>
+					</formats>
 					<instrumentation>
 						<ignores>
 							<ignore>com.eswaraj.domain.base.*</ignore>
@@ -270,8 +270,49 @@
 						</ignores>
 						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
 					</instrumentation>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>cobertura</goal>
+							</goals>
+						</execution>
+					</executions>
 				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<formats>
+						<format>xml</format>
+						<format>html</format>
+					</formats>
+					<instrumentation>
+						<ignores>
+							<ignore>com.eswaraj.domain.base.*</ignore>
+							<ignore>com.eswaraj.domain.nodes.*</ignore>
+							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
+							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
+						</ignores>
+						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
+					</instrumentation>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>cobertura</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
