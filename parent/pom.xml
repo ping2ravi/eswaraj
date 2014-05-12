@@ -25,6 +25,7 @@
 		<spring.data.version>2.3.2.RELEASE</spring.data.version>
 		<jmock.version>2.6.0</jmock.version>
 		<org.aspectj.version>1.8.0</org.aspectj.version>
+		<org.slf4j.version>1.7.7</org.slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -191,6 +192,21 @@
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-legacy</artifactId>
 			<version>${jmock.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
