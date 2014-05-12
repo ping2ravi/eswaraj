@@ -4,7 +4,7 @@
 	<artifactId>eswaraj-web</artifactId>
 	<name>ESwaraj Web</name>
 	<description>Web interface for eswaraj</description>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	
 	<parent>
 		<groupId>com.eswaraj</groupId>

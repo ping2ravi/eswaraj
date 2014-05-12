@@ -4,7 +4,6 @@
 	<artifactId>eswaraj-api</artifactId>
 	<name>ESwaraj REST API</name>
 	<description>Rest API for eswaraj</description>
-	<packaging>war</packaging>
 	
 	<parent>
 		<groupId>com.eswaraj</groupId>
