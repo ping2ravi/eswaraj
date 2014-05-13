@@ -46,6 +46,7 @@ public class LocationServiceImpl implements LocationService {
 		Location location = getObjectIfExists(locationDto.getId(), "Location", locationRepository);
 		if(location == null){
 			location = new Location();
+			locationDto.setId(null);
 		}
 		location = locationConvertor.convert(locationDto);
 		locationRepository.save(location);
@@ -54,13 +55,13 @@ public class LocationServiceImpl implements LocationService {
 
 	@Override
 	public LocationDto getLocationById(Long id)  throws ApplicationException{
-		Location dbLocation = locationRepository.getById(id);
+		Location dbLocation = locationRepository.findOne(id);
 		return locationConvertor.convertBean(dbLocation);
 	}
 
 	@Override
 	public List<LocationDto> getChildLocationsOfParent(Long parentLocationId)  throws ApplicationException{
-		Location parenLocation = locationRepository.getById(parentLocationId);
+		Location parenLocation = locationRepository.findOne(parentLocationId);
 		Collection<Location> childLocations = locationRepository.findLocationByParentLocation(parenLocation);
 		return locationConvertor.convertBeanList(childLocations);
 	}

@@ -19,8 +19,6 @@ import com.eswaraj.web.dto.LocationType;
  */
 public interface LocationRepository extends GraphRepository<Location>{
 	
-	public Location getById(Long id);
-
 	@Query("start location=node({0})" +
 			"match (location)<-[:SERVED_BY]-(executiveBody) return executiveBody")
 	public Set<ExecutiveBody> findExecutiveBodies(Location location);

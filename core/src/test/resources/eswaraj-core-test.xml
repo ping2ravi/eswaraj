@@ -15,8 +15,9 @@
 
     <import resource="classpath:eswaraj-core.xml" />
     <import resource="classpath:eswaraj-neo4j-test-db-context.xml" />
-    <import resource="eswaraj-neo4j-test-local-db-context.xml" />
-    
+    <!-- 
+    <import resource="classpath:eswaraj-neo4j-test-local-db-context.xml" />
+     -->
 
     <aop:aspectj-autoproxy/>
     

@@ -2,6 +2,7 @@ package com.eswaraj.core.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -86,5 +87,73 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		assertEquals(1, childrenLocations.size());
 		assertEqualLocations(haryanaLocation, childrenLocations.get(0));
 		assertEqualLocations(savedLaryanaLocation, childrenLocations.get(0));
+	}
+	
+	/**
+	 * Simple Test to save Location and then update it
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test05_saveLocation() throws ApplicationException{
+		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationDto savedLocation = locationService.saveLocation(location);
+		savedLocation.setName("US");
+		savedLocation = locationService.saveLocation(savedLocation);
+		assertEquals("US", savedLocation.getName());
+		
+		LocationDto dbLocation = locationService.getLocationById(savedLocation.getId());
+		assertEqualLocations(savedLocation, dbLocation);
+		
+		assertEquals("US", dbLocation.getName());
+	}
+	
+	/**
+	 * Simple Test to update Location which do not exists
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test06_saveLocation() throws ApplicationException{
+		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		location.setId(100L);
+		locationService.saveLocation(location);
+	}
+	
+	/**
+	 * Simple Test to save Location where given id is 0
+	 * It will create a new location with new Id and will consider id as null only
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test07_saveLocation() throws ApplicationException{
+		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		location.setId(0L);
+		LocationDto savedLocation = locationService.saveLocation(location);
+		assertNotNull(savedLocation);
+		assertEqualLocations(location, savedLocation);
+		
+	}
+	
+	/**
+	 * Simple Test to get Location where given id do not exist
+	 * It will create a new location with new Id and will consider id as null only
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test08_getLocationById() throws ApplicationException{
+		LocationDto location = locationService.getLocationById(100000000L);
+		assertNull(location);
+		
+	}
+	
+	/**
+	 * Simple Test to save Location where parent do not exists
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test09_saveLocation() throws ApplicationException{
+		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		
+		location.setParentLocationId(randomLong(100000));
+		locationService.saveLocation(location);
 	}
 }

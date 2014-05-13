@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.web.dto.LocationDto;
@@ -16,11 +17,14 @@ public class LocationConvertor extends BaseConvertor<Location, LocationDto> {
 	
 
 	@Override
-	protected Location convertInternal(LocationDto webDto) {
+	protected Location convertInternal(LocationDto webDto) throws ApplicationException {
 		Location location = new Location();
 		BeanUtils.copyProperties(webDto, location);
-		if(webDto.getParentLocationId() != null && webDto.getParentLocationId() > 0){
+		if(webDto.getParentLocationId() != null){
 			Location parentLocation = locationRepository.findOne(webDto.getParentLocationId());
+			if(parentLocation == null){
+				throw new ApplicationException("No such Location exists[id="+webDto.getParentLocationId()+"]");
+			}
 			location.setParentLocation(parentLocation);
 		}
 		return location;

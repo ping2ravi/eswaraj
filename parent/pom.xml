@@ -267,6 +267,7 @@
 							<ignore>com.eswaraj.domain.nodes.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
+							<ignore>com.eswaraj.core.exceptions.*</ignore>
 						</ignores>
 						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
 					</instrumentation>
@@ -300,6 +301,7 @@
 							<ignore>com.eswaraj.domain.nodes.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
+							<ignore>com.eswaraj.core.exceptions.*</ignore>
 						</ignores>
 						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
 					</instrumentation>

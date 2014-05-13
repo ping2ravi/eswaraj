@@ -20,7 +20,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	@Autowired(required=false) TestObjectContextManager testObjectContextManager;
 
 	@Autowired
-	private GraphDatabaseService graphDb;
+	private GraphDatabaseService graphDatabaseService;
 	
 	@Before
 	public void init(){
@@ -29,7 +29,7 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	@After
 	public void destroyTest(){
 		if(testObjectContextManager != null){
-			Transaction txn = graphDb.beginTx();
+			Transaction txn = graphDatabaseService.beginTx();
 			try{
 				testObjectContextManager.clearAllObjectsCreatdDuringTest();
 				txn.success();
