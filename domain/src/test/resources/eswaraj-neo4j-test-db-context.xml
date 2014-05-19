@@ -11,12 +11,21 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-        http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd"
-        profile="jenkins">
+        http://www.springframework.org/schema/data/neo4j http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
 
-	 <neo4j:config storeDirectory="/tmp/graph.db" /> 
-	
-<!-- 	Commented following code as for Test we will run DB in memory -->
 	<neo4j:repositories base-package="com.eswaraj.domain.nodes.different" />
+	<beans profile="jenkins">
+		<neo4j:config storeDirectory="/tmp/graph.db" />
+	</beans>
+
+	<beans profile="local">
+		<neo4j:config graphDatabaseService="graphDatabaseService" />
+		<bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+			<constructor-arg index="0" value="http://localhost:7474/db/data" />
+
+		</bean>
+
+	</beans>
+
 
 </beans>

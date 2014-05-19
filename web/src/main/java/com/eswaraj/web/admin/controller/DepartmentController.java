@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class DepartmentController {
 
-	@RequestMapping(value = "/categories.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/department.html", method = RequestMethod.GET)
 	public ModelAndView login(ModelAndView mv,
 			HttpServletRequest httpServletRequest) {
 		
