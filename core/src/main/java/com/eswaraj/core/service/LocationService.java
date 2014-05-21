@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.web.dto.LocationDto;
+import com.eswaraj.web.dto.LocationType;
 
 public interface LocationService {
 
@@ -13,5 +14,7 @@ public interface LocationService {
 	LocationDto getLocationById(Long id) throws ApplicationException;
 	
 	List<LocationDto> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
+	
+	LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
 	
 }

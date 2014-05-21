@@ -13,6 +13,17 @@
 	</parent>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.el</groupId>
+			<artifactId>el-ri</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<!-- eswaraj -->
 
 		<!-- Persistence -->
@@ -44,7 +55,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.1.1.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
@@ -62,6 +73,37 @@
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 			<scope>runtime</scope>
+		</dependency>
+		<!-- File Upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj.web</groupId>
+			<artifactId>eswaraj-dto</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-domain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eswaraj</groupId>
+			<artifactId>eswaraj-test</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

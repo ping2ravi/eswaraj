@@ -19,18 +19,6 @@
 	<context:component-scan base-package="com.eswaraj.domain.validator" />
 
 
-	<!-- To enable to inject Env Property in spring properties -->
-	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<property name="searchSystemEnvironment" value="true" />
-		<property name="properties">
-			<util:properties>
-
-			</util:properties>
-		</property>
-	</bean>
-
-
 	<!-- Do not enter db url or user name/password here, in Prod and test end these will be injected from Env in ur local env, you can define these as enviornment variables -->
 	<tx:annotation-driven />
 </beans>

@@ -250,6 +250,22 @@ public class TestLocationRepository extends BaseNeo4jEswarajTest {
 		createLocation(villageName, LocationType.VILLAGE, null);
 	}
 	
+	/**
+	 * when creating a Location
+	 * then we can get it by Location Name and type
+	 */
+	@Test
+	public void test20_getLocationByNameAndType(){
+		
+		final String countryName = randomAlphaString(16);
+		Location location = createLocation(countryName, LocationType.COUNTRY, null);
+		
+		Location dbLocation = locationRepository.getLocationByNameAndType(location.getName(), location.getLocationType());
+		System.out.println("dbLocation="+dbLocation);
+	}
+	
+	
+	
 	private void createTwoLocationParentAndChildSuccessfully(LocationType parentLocationType, LocationType childLocationType, Location parentLocationParent){
 		final String childLocationName = randomAlphaString(16);
 		final String parentLocationName = randomAlphaString(16);

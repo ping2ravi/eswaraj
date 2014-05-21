@@ -14,6 +14,7 @@ import com.eswaraj.core.service.LocationService;
 import com.eswaraj.domain.nodes.Location;
 import com.eswaraj.domain.repo.LocationRepository;
 import com.eswaraj.web.dto.LocationDto;
+import com.eswaraj.web.dto.LocationType;
 
 @Component
 @Transactional
@@ -64,6 +65,12 @@ public class LocationServiceImpl implements LocationService {
 		Location parenLocation = locationRepository.findOne(parentLocationId);
 		Collection<Location> childLocations = locationRepository.findLocationByParentLocation(parenLocation);
 		return locationConvertor.convertBeanList(childLocations);
+	}
+
+	@Override
+	public LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException {
+		Location location = locationRepository.getLocationByNameAndType(locationName, locationType);
+		return locationConvertor.convertBean(location);
 	}
 
 }
