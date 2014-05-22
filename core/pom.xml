@@ -40,6 +40,11 @@
 			<groupId>com.eswaraj</groupId>
 			<artifactId>eswaraj-test</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>eswaraj-core</finalName>
