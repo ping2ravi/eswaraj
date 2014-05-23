@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.eswaraj.base.BaseEswarajMockitoTest;
+import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationType;
@@ -66,7 +67,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		result.andExpect(status().isOk());
 		// System.out.println("Content = "+content().);
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
-		
+
 		checkLocation(result, locationDto, parentLocationId);
 	}
 
@@ -92,99 +93,327 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 
 		checkLocationArray(result, childLocations, parentLocationId);
 	}
-	
+
 	/**
-	 * Save  State when Client passes LocationType as State in json
-	 * It should save it as LocationType is always ignored
+	 * Save State when Client passes LocationType as State in json It should
+	 * save it as LocationType is always ignored
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void test03_saveState() throws Exception {
-		// create Test expectation data
-		Long parentLocationId = randomLong();
-		LocationType newLocationTypeToBeSaved = LocationType.STATE;
-		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, newLocationTypeToBeSaved);
-		LocationDto locationAfterSave = copyOneLocation(newLocationToBeSaved);
-		//For creating the new Location set Id as Null
-		newLocationToBeSaved.setId(null);
-		
-		
-		// Set Mock expectation
-		when(locationService.saveLocation(newLocationToBeSaved)).thenReturn(locationAfterSave);
-
-		// Run test
-		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = mockMvc.perform(post("/ajax/location/state/save").accept(expectedMediaType)
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(newLocationToBeSaved))
-        );
-		//ResultActions result = this.mockMvc.perform(get("/ajax/location/getchild/" + parentLocationId).accept(expectedMediaType));
-		result.andExpect(status().isOk());
-		// System.out.println("Content = "+content().);
-		//result.andExpect(content().contentType("application/json;charset=UTF-8"));
-
-		checkLocation(result, locationAfterSave, parentLocationId);
+		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.STATE);
 	}
+
 	/**
-	 * Save  State when Client passes LocationType as null
-	 * It should save it as LocationType is always ignored
+	 * Save State when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void test04_saveState() throws Exception {
-		// create Test expectation data
-		Long parentLocationId = randomLong();
-		LocationType newLocationTypeToBeSaved = LocationType.STATE;
-		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, newLocationTypeToBeSaved);
-		LocationDto locationAfterSave = copyOneLocation(newLocationToBeSaved);
-		//For creating the new Location set Id as Null
-		newLocationToBeSaved.setId(null);
-		LocationDto clientLocationToBeSavedWithNullType = copyOneLocation(newLocationToBeSaved);
-		clientLocationToBeSavedWithNullType.setLocationType(null);
-		
-		
-		// Set Mock expectation
-		when(locationService.saveLocation(newLocationToBeSaved)).thenReturn(locationAfterSave);
-
-		// Run test
-		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = mockMvc.perform(post("/ajax/location/state/save").accept(expectedMediaType)
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(newLocationToBeSaved))
-        );
-		result.andExpect(status().isOk());
-		result.andExpect(content().contentType("application/json;charset=UTF-8"));
-
-		checkLocation(result, locationAfterSave, parentLocationId);
+		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, null);
 	}
-	
+
 	/**
-	 * Save  State when Client passes LocationType as Non State, i.e Country
-	 * It should save it as LocationType is always ignored
+	 * Save State when Client passes LocationType as Non State, i.e Country It
+	 * should save it as LocationType is always ignored
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void test05_saveState() throws Exception {
+		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.COUNTRY);
+		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.CITY);
+	}
+	
+	/**
+	 * Save District when Client passes LocationType as District in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test06_saveDistrict() throws Exception {
+		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, LocationType.DISTRICT);
+	}
+
+	/**
+	 * Save District when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test07_saveDistrict() throws Exception {
+		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, null);
+	}
+
+	/**
+	 * Save District when Client passes LocationType as Non District, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test08_saveDistrict() throws Exception {
+		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, LocationType.STATE);
+	}
+	
+	/**
+	 * Save AC when Client passes LocationType as AC in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test09_saveAc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, LocationType.ASSEMBLY_CONSTITUENCY);
+	}
+
+	/**
+	 * Save AC when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test10_saveAc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, null);
+	}
+
+	/**
+	 * Save AC when Client passes LocationType as Non AC, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test11_saveAc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, LocationType.STATE);
+	}
+	
+	
+	/**
+	 * Save PC when Client passes LocationType as PC in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test12_savePc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, LocationType.PARLIAMENT_CONSTITUENCY);
+	}
+
+	/**
+	 * Save PC when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test13_savePc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, null);
+	}
+
+	/**
+	 * Save PC when Client passes LocationType as Non PC, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test14_savePc() throws Exception {
+		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, LocationType.STATE);
+	}
+
+	/**
+	 * Save CITY when Client passes LocationType as CITY in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test15_saveCity() throws Exception {
+		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, LocationType.CITY);
+	}
+
+	/**
+	 * Save CITY when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test16_saveCity() throws Exception {
+		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, null);
+	}
+
+	/**
+	 * Save CITY when Client passes LocationType as Non CITY, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test17_saveCity() throws Exception {
+		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, LocationType.STATE);
+	}
+	
+	/**
+	 * Save LocalArea when Client passes LocationType as LocalArea in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test18_saveLocalArea() throws Exception {
+		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, LocationType.LOCAL_AREA);
+	}
+
+	/**
+	 * Save LocalArea when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test19_saveLocalArea() throws Exception {
+		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, null);
+	}
+
+	/**
+	 * Save LocalArea when Client passes LocationType as Non LocalArea, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test20_saveLocalArea() throws Exception {
+		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, LocationType.STATE);
+	}
+	
+	/**
+	 * Save MUNCIPLE when Client passes LocationType as MUNCIPLE in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test21_saveMunciple() throws Exception {
+		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, LocationType.MUNCIPLE);
+	}
+
+	/**
+	 * Save MUNCIPLE when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test22_saveMunciple() throws Exception {
+		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, null);
+	}
+
+	/**
+	 * Save Munciple when Client passes LocationType as Non Munciple, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test23_saveMunciple() throws Exception {
+		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, LocationType.STATE);
+	}
+	
+	
+	/**
+	 * Save VILLAGE when Client passes LocationType as VILLAGE in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test24_saveVillage() throws Exception {
+		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, LocationType.VILLAGE);
+	}
+
+	/**
+	 * Save VILLAGE when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test25_saveVillage() throws Exception {
+		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, null);
+	}
+
+	/**
+	 * Save VILLAGE when Client passes LocationType as Non VILLAGE, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test26_saveVillage() throws Exception {
+		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, LocationType.STATE);
+	}
+	
+	/**
+	 * Save WARD when Client passes LocationType as WARD in json It should
+	 * save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test27_saveWard() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, LocationType.WARD);
+	}
+
+	/**
+	 * Save WARD when Client passes LocationType as null It should save it as
+	 * LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test28_saveWard() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, null);
+	}
+
+	/**
+	 * Save WARD when Client passes LocationType as Non WARD, i.e State 
+	 * It should save it as LocationType is always ignored
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test29_saveWard() throws Exception {
+		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, LocationType.STATE);
+	}
+
+	/*
+	 * when saving a location with the locationType as per url
+	 */
+	private void saveLocationWithLocationType(String saveUrl, LocationType locationType, LocationType actualLocationTypeSent) throws Exception {
 		// create Test expectation data
 		Long parentLocationId = randomLong();
-		LocationType newLocationTypeToBeSaved = LocationType.STATE;
-		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, newLocationTypeToBeSaved);
+		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, locationType);
 		LocationDto locationAfterSave = copyOneLocation(newLocationToBeSaved);
-		//For creating the new Location set Id as Null
+		// For creating the new Location set Id as Null
 		newLocationToBeSaved.setId(null);
 		LocationDto clientLocationToBeSavedWithNullType = copyOneLocation(newLocationToBeSaved);
-		clientLocationToBeSavedWithNullType.setLocationType(LocationType.COUNTRY);
-		
-		
+		clientLocationToBeSavedWithNullType.setLocationType(actualLocationTypeSent);
+
 		// Set Mock expectation
 		when(locationService.saveLocation(newLocationToBeSaved)).thenReturn(locationAfterSave);
 
 		// Run test
 		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = mockMvc.perform(post("/ajax/location/state/save").accept(expectedMediaType)
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(convertObjectToJsonBytes(newLocationToBeSaved))
-        );
+		ResultActions result = mockMvc.perform(post(saveUrl).accept(expectedMediaType).contentType(APPLICATION_JSON_UTF8)
+				.content(convertObjectToJsonBytes(newLocationToBeSaved)));
 		result.andExpect(status().isOk());
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
 
@@ -243,6 +472,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 
 		return locationDto;
 	}
+
 	private LocationDto copyOneLocation(LocationDto sourceLocation) {
 		LocationDto locationDto = new LocationDto();
 		locationDto.setId(sourceLocation.getId());
@@ -254,10 +484,11 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 
 		return locationDto;
 	}
-    public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.writeValueAsBytes(object);
-    }
+
+	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		return mapper.writeValueAsBytes(object);
+	}
 
 }
