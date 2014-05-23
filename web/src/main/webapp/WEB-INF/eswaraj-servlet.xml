@@ -39,10 +39,13 @@
 	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
+	<task:annotation-driven />
 	<!-- Imports user-defined @Controller beans that process client requests -->
+	<beans:beans profile="prod,tomcat">
 	<beans:import resource="controllers.xml" />
 	<beans:import resource="eswaraj-neo4j-db-context.xml" />
+	    	    
+	</beans:beans>
 
-	<task:annotation-driven />
 
 </beans:beans>
