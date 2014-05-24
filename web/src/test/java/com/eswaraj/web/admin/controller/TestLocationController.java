@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.eswaraj.base.BaseEswarajMockitoTest;
-import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationType;
