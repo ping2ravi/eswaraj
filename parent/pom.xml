@@ -310,7 +310,10 @@
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
 							<ignore>com.eswaraj.core.exceptions.*</ignore>
 						</ignores>
-						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
+						<excludes>
+							<exclude>com/eswaraj/domain/base/*.class</exclude>
+							<exclude>com.eswaraj.domain.nodes/*.class</exclude>
+						</excludes>
 					</instrumentation>
 					<executions>
 						<execution>
@@ -320,6 +323,17 @@
 							</goals>
 						</execution>
 					</executions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+					
 				</configuration>
 			</plugin>
 		</plugins>
@@ -341,10 +355,20 @@
 							<ignore>com.eswaraj.domain.base.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
-							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
 							<ignore>com.eswaraj.core.exceptions.*</ignore>
+							<ignore>com.eswaraj.domain.nodes.relationships.*</ignore>
+							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
+							<ignore>com.eswaraj.domain.validator.exception.*</ignore>
 						</ignores>
-						<!-- <excludes> <exclude>com/example/dullcode/**/*.class</exclude> <exclude>com/example/**/*Test.class</exclude> </excludes> -->
+						<excludes>
+							<exclude>com/eswaraj/domain/base/*.class</exclude>
+							<exclude>com/eswaraj/domain/nodes/*.class</exclude>
+							<exclude>com/eswaraj/core/exceptions/*.class</exclude>
+							<exclude>com/eswaraj/domain/nodes/relationships/*.class</exclude>
+							<eclude>com/eswaraj/domain/nodes/division/*.class</eclude>
+							<eclude>com/eswaraj/domain/validator/exception/*.class</eclude>
+						</excludes>
+
 					</instrumentation>
 					<executions>
 						<execution>
