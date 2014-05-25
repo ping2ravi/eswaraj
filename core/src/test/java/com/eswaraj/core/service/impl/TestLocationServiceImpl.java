@@ -1,11 +1,13 @@
-package com.eswaraj.core.service;
+package com.eswaraj.core.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.InputStream;
 import java.util.List;
 
+import org.jmock.Expectations;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.eswaraj.core.BaseNeo4jEswarajTest;
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.FileService;
+import com.eswaraj.core.service.LocationService;
+import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationType;
 
@@ -171,5 +176,48 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		
 		LocationDto dbLocation = locationService.getLocationByNameAndType(locationName, locationType);
 		assertEqualLocations(savedLocation, dbLocation);
+	}
+	
+	/**
+	 * Test to upload a LocationBoundary file
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test11_createNewLocationBoundaryFile() throws ApplicationException{
+		
+		//Create a location
+		String locationName = "India";
+		LocationType locationType = LocationType.COUNTRY;
+		LocationDto location = createLocation(locationName, locationType, null);
+		LocationDto savedLocation = locationService.saveLocation(location);
+		
+		final FileService fileService = mock(FileService.class, "fileService");
+		
+		final InputStream inputStream = mock(InputStream.class, "inputStream");
+		expect(new Expectations() {{
+            oneOf (fileService).saveFile(with(any(String.class)), with(any(String.class)), with(any(InputStream.class)));
+        }});
+		
+		LocationBoundaryFileDto locationBoundaryFileDto = locationService.createNewLocationBoundaryFile(savedLocation.getId(), inputStream, fileService);
+		assertNotNull(locationBoundaryFileDto);
+		assertNotNull(locationBoundaryFileDto.getId());
+		assertNotNull(locationBoundaryFileDto.getFileNameAndPath());
+		assertEquals(savedLocation.getId(), locationBoundaryFileDto.getLocationId());
+		assertEquals("Pending", locationBoundaryFileDto.getStatus());
+	}
+	/**
+	 * Test to upload a LocationBoundary file for a location which do not exists
+	 * it will throw ApplicationException
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test12_createNewLocationBoundaryFile() throws ApplicationException{
+		final Long locationId = randomPositiveLong();
+		final FileService fileService = mock(FileService.class, "fileService");
+		final InputStream inputStream = mock(InputStream.class, "inputStream");
+		expect(new Expectations() {{
+        }});
+		
+		locationService.createNewLocationBoundaryFile(locationId, inputStream, fileService);
 	}
 }

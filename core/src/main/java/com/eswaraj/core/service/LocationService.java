@@ -1,8 +1,10 @@
 package com.eswaraj.core.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
 import com.eswaraj.web.dto.LocationType;
 
@@ -17,4 +19,13 @@ public interface LocationService {
 	
 	LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
 	
+	/**
+	 * We are passing the file service from outside as its not possible to inject FileService for testing on proxy implemention
+	 * @param locationId
+	 * @param inputStream
+	 * @param fileService
+	 * @return
+	 * @throws ApplicationException
+	 */
+	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
 }

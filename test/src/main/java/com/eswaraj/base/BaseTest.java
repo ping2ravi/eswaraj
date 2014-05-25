@@ -1,7 +1,5 @@
 package com.eswaraj.base;
 
-import static org.junit.Assert.fail;
-
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -11,6 +9,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.springframework.http.MediaType;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class BaseTest {
 
@@ -56,14 +55,21 @@ public class BaseTest {
 	 * @param propertyObjectValue the value being injected
 	 */
 	protected void inject(Object targetObject, String propertyName, Object proprtyObjectValue) {
+		ReflectionTestUtils.setField(targetObject, propertyName, proprtyObjectValue);
+		/*
 	    try {
 	        Class cls = targetObject.getClass();
+	        System.out.println("***baseTest****");
+	        
 	        Field field = null;
 	        while (cls != Object.class) {
+	        	System.out.println("cls="+cls);
 	            try {
 	                field = cls.getDeclaredField(propertyName);
+	                System.out.println("field="+field);
 	                break;
 	            } catch (NoSuchFieldException e) {
+	            	System.out.println("NoSuchFieldException="+propertyName);
 	                cls = cls.getSuperclass();
 	            }
 	        }
@@ -82,6 +88,7 @@ public class BaseTest {
 	        e.printStackTrace();
 	        fail("Failed to inject dependency for " + propertyName + " on " + targetObject.getClass().getName());
 	    }
+	    */
 	}
 
 	/**
@@ -260,6 +267,16 @@ public class BaseTest {
 	    return RANDOM.nextLong();
 	}
 
+	/**
+	 * Generate a random positive long value
+	 */
+	public static long randomPositiveLong() {
+		long randomLong = randomLong();
+		if(randomLong < 0){
+			randomLong = 0 - randomLong;
+		}
+	    return randomLong;
+	}
 	/**
 	 * Generate a random long value between 0 and max
 	 */
