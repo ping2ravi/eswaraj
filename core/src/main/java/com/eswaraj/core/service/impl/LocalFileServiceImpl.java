@@ -9,7 +9,7 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.FileService;
 
 @Component
-@Profile("local")
+@Profile({ "local", "jenkins"})
 public class LocalFileServiceImpl implements FileService {
 
 	@Override

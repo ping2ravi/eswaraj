@@ -41,7 +41,7 @@ public class LocationController {
             @RequestParam("file") MultipartFile file, @PathVariable Long locationId){
         if (!file.isEmpty()) {
             try {
-            	customService.processLocationBoundaryFile(file.getInputStream());
+            	customService.processLocationBoundaryFile(locationId, file.getInputStream());
             	/*
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
