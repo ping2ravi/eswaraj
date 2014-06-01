@@ -352,6 +352,7 @@
 					<instrumentation>
 						<ignores>
 							<ignore>com.eswaraj.domain.base.*</ignore>
+							<ignore>com.eswaraj.core.service.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.*</ignore>
 							<ignore>com.eswaraj.domain.nodes.division.*</ignore>
 							<ignore>com.eswaraj.core.exceptions.*</ignore>
@@ -360,6 +361,7 @@
 							<ignore>com.eswaraj.domain.validator.exception.*</ignore>
 						</ignores>
 						<excludes>
+							<exclude>com/eswaraj/core/service/*.class</exclude>
 							<exclude>com/eswaraj/domain/base/*.class</exclude>
 							<exclude>com/eswaraj/domain/nodes/*.class</exclude>
 							<exclude>com/eswaraj/core/exceptions/*.class</exclude>
