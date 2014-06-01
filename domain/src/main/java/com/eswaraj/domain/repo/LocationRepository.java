@@ -33,7 +33,7 @@ public interface LocationRepository extends GraphRepository<Location>{
 	@Query("start location=node:Location(name={0}) where location.locationType={1} return location")
     public Location getLocationByNameAndType(String name, LocationType locationType);
 
-	@Query("start locationType=node({0}) match (locationType)<-[:OF_TYPE]-(location) where location.parentLocation is null return location")
+	@Query("start locationType=node({0}) match (locationType)<-[:OF_TYPE]-(location) where (NOT HAS(location.parentLocation)) OR location.parentLocation is null return location")
     public Location getRootLocationByLocationType( Long locationTypeId);
 
 	@Query("start location=node:Location(locationType={0}) return location")
