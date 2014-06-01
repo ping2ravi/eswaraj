@@ -20,7 +20,8 @@ import com.eswaraj.core.service.FileService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
+import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.LocationTypeJsonDto;
 
 /**
  * Test for Location repository
@@ -40,8 +41,11 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 * @throws ApplicationException
 	 */
 	@Test
-	public void test01_save() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+	public void test01_saveLocation() throws ApplicationException{
+		String locationTypeName = "Country";
+		LocationTypeDto locationTypeDto = createLocationType(locationTypeName, null);
+		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		LocationDto location = createLocation("India", locationTypeDto, null);
 		LocationDto savedLocation = locationService.saveLocation(location);
 		assertNotNull(savedLocation.getId());
 		assertEqualLocations(location, savedLocation);
@@ -54,9 +58,14 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test02_save() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+
+		LocationTypeDto stateLocationTypeDto = createAndSaveLocationType(locationService, "State", countryLocationTypeDto.getId());
+
+		
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		LocationDto parentLocation = locationService.saveLocation(location);
-		LocationDto haryanaLocation = createLocation("India", LocationType.STATE, parentLocation.getId());
+		LocationDto haryanaLocation = createLocation("Haryana", stateLocationTypeDto, parentLocation.getId());
 		LocationDto savedLaryanaLocation = locationService.saveLocation(haryanaLocation);
 		assertNotNull(savedLaryanaLocation.getId());
 		assertNotNull(savedLaryanaLocation.getParentLocationId());
@@ -69,7 +78,9 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test03_getLocationById() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		LocationDto savedLocation = locationService.saveLocation(location);
 		LocationDto dbLocation = locationService.getLocationById(savedLocation.getId()); 
 		assertNotNull(dbLocation.getId());
@@ -82,9 +93,12 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test04_getChildLocationsOfParent() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationTypeDto stateLocationTypeDto = createAndSaveLocationType(locationService, "State", countryLocationTypeDto.getId());
+		
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		LocationDto parentLocation = locationService.saveLocation(location);
-		LocationDto haryanaLocation = createLocation("Haryana", LocationType.STATE, parentLocation.getId());
+		LocationDto haryanaLocation = createLocation("Haryana", stateLocationTypeDto, parentLocation.getId());
 		LocationDto savedLaryanaLocation = locationService.saveLocation(haryanaLocation);
 		List<LocationDto> childrenLocations = locationService.getChildLocationsOfParent(parentLocation.getId());
 		
@@ -100,7 +114,8 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test05_saveLocation() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		LocationDto savedLocation = locationService.saveLocation(location);
 		savedLocation.setName("US");
 		savedLocation = locationService.saveLocation(savedLocation);
@@ -118,7 +133,8 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test(expected=ApplicationException.class)
 	public void test06_saveLocation() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		location.setId(100L);
 		locationService.saveLocation(location);
 	}
@@ -130,7 +146,8 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test
 	public void test07_saveLocation() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		location.setId(0L);
 		LocationDto savedLocation = locationService.saveLocation(location);
 		assertNotNull(savedLocation);
@@ -156,7 +173,8 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	 */
 	@Test(expected=ApplicationException.class)
 	public void test09_saveLocation() throws ApplicationException{
-		LocationDto location = createLocation("India", LocationType.COUNTRY, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
 		
 		location.setParentLocationId(randomLong(100000));
 		locationService.saveLocation(location);
@@ -169,13 +187,15 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 	@Test
 	public void test10_saveLocation() throws ApplicationException{
 		String locationName = "India";
-		LocationType locationType = LocationType.COUNTRY;
-		LocationDto location = createLocation(locationName, locationType, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation(locationName, countryLocationTypeDto, null);
 		
+		/*
 		LocationDto savedLocation = locationService.saveLocation(location);
 		
-		LocationDto dbLocation = locationService.getLocationByNameAndType(locationName, locationType);
+		LocationDto dbLocation = locationService.getLocationByNameAndType(locationName, countryLocationTypeDto);
 		assertEqualLocations(savedLocation, dbLocation);
+		*/
 	}
 	
 	/**
@@ -187,8 +207,8 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		
 		//Create a location
 		String locationName = "India";
-		LocationType locationType = LocationType.COUNTRY;
-		LocationDto location = createLocation(locationName, locationType, null);
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+		LocationDto location = createLocation(locationName, countryLocationTypeDto, null);
 		LocationDto savedLocation = locationService.saveLocation(location);
 		
 		final FileService fileService = mock(FileService.class, "fileService");
@@ -220,4 +240,118 @@ public class TestLocationServiceImpl extends BaseNeo4jEswarajTest{
 		
 		locationService.createNewLocationBoundaryFile(locationId, inputStream, fileService);
 	}
+	/**
+	 * Try to save a root location type when a root location type already exist
+	 * @throws ApplicationException 
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test13_saveLocationType() throws ApplicationException{
+		String firstRootLocationTypeName = uniqueAlphaNumericString(randomInteger(32) + 1, "locationTypeName");
+		String secondRootLocationTypeName = uniqueAlphaNumericString(randomInteger(32) + 1, "locationTypeName");
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, firstRootLocationTypeName, null);
+		assertNotNull(locationTypeDto);
+		//Means First root location type(parent is null) is saved
+		//Now try to create another one with parent as null/Root it must throw Application Exception
+		createAndSaveLocationType(locationService, secondRootLocationTypeName, null);
+	}
+	/**
+	 * Try to save a root location type when No root location exists
+	 */
+	@Test
+	public void test14_saveLocationType() throws ApplicationException{
+		String firstRootLocationTypeName = uniqueAlphaNumericString(randomInteger(32) + 1, "locationTypeName");
+		LocationTypeDto locationTypeDto = createAndSaveLocationType(locationService, firstRootLocationTypeName, null);
+		assertNotNull(locationTypeDto);
+	}
+	/**
+	 * Try to save a root location type and then creat its child location type
+	 */
+	@Test
+	public void test15_saveLocationType() throws ApplicationException{
+		String firstRootLocationTypeName = uniqueAlphaNumericString(randomInteger(32) + 1, "locationTypeName");
+		String secondRootLocationTypeName = uniqueAlphaNumericString(randomInteger(32) + 1, "locationTypeName");
+		LocationTypeDto parentLocationTypeDto = createAndSaveLocationType(locationService, firstRootLocationTypeName, null);
+		assertNotNull(parentLocationTypeDto);
+		LocationTypeDto childLocationTypeDto = createAndSaveLocationType(locationService, secondRootLocationTypeName, parentLocationTypeDto.getId());
+		assertNotNull(childLocationTypeDto);
+		//Now get it back via getLocationType service
+		LocationTypeJsonDto locationTypeJsonDto = locationService.getLocationTypes(randomAlphaString(16));
+		assertEqualLocationTypes(parentLocationTypeDto, locationTypeJsonDto, true);
+		assertEquals(1, locationTypeJsonDto.getChildren().size());
+		assertEqualLocationTypes(childLocationTypeDto, locationTypeJsonDto.getChildren().get(0), true);
+	}
+	
+	/**
+	 * Simple Test to save Location 
+	 * No parent Location id provided
+	 * and the get it back by getRootLocationForSwarajIndia
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test16_saveLocation() throws ApplicationException{
+		String locationTypeName = randomAlphaString(16);
+		LocationTypeDto locationTypeDto = createLocationType(locationTypeName, null);
+		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		LocationDto location = createLocation(randomAlphaString(16), locationTypeDto, null);
+		LocationDto savedLocation = locationService.saveLocation(location);
+		assertNotNull(savedLocation.getId());
+		assertEqualLocations(location, savedLocation);
+		
+		LocationDto dbLocation = locationService.getRootLocationForSwarajIndia();
+		assertNotNull(dbLocation.getId());
+		assertEqualLocations(location, dbLocation);
+	}
+	
+	/**
+	 * no root location exists for eswaraj-india and then call getRootLocationForSwarajIndia
+	 * It shud returne back a root lcaotion
+	 * @throws ApplicationException
+	 */
+	@Test
+	public void test17_getRootLocationForSwarajIndia() throws ApplicationException{
+		LocationDto dbLocation = locationService.getRootLocationForSwarajIndia();
+		assertNotNull(dbLocation.getId());
+		assertEquals("India", dbLocation.getName());
+		//also location Type must have been created
+		LocationTypeJsonDto locationTypeJsonDto = locationService.getLocationTypes(randomAlphaString(16));
+		assertEquals("Country", locationTypeJsonDto.getName());
+		assertNull(locationTypeJsonDto.getChildren());
+		
+	}
+	
+	/**
+	 * Simple Test to save Location with wrong parent
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test018_save() throws ApplicationException{
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+
+		LocationTypeDto stateLocationTypeDto = createAndSaveLocationType(locationService, "State", countryLocationTypeDto.getId());
+		
+		LocationTypeDto districtLocationTypeDto = createAndSaveLocationType(locationService, "District", stateLocationTypeDto.getId());
+
+		
+		LocationDto location = createLocation("India", countryLocationTypeDto, null);
+		LocationDto parentLocation = locationService.saveLocation(location);
+		LocationDto faridabadLocation = createLocation("Faridabad", districtLocationTypeDto, parentLocation.getId());
+		//must throw exception
+		locationService.saveLocation(faridabadLocation);
+	}
+	/**
+	 * Simple Test to save Location with location type which can be root
+	 * @throws ApplicationException
+	 */
+	@Test(expected=ApplicationException.class)
+	public void test019_save() throws ApplicationException{
+		LocationTypeDto countryLocationTypeDto = createAndSaveLocationType(locationService, "Country", null);
+
+		LocationTypeDto stateLocationTypeDto = createAndSaveLocationType(locationService, "State", countryLocationTypeDto.getId());
+		
+
+		
+		LocationDto locationDto = createLocation("Haryana", stateLocationTypeDto, null);
+		locationService.saveLocation(locationDto);
+	}
+	
 }

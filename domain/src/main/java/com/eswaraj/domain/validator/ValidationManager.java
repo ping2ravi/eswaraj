@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ValidationManager extends Neo4jConfiguration {
    
-	@SuppressWarnings("rawtypes")
+	//@SuppressWarnings("rawtypes")
 	Map<Class, BaseValidator> validators = new HashMap<Class, BaseValidator>(); 
 	
 	public <T> void registerValidator(Class<T> type, BaseValidator<T> baseValidator){

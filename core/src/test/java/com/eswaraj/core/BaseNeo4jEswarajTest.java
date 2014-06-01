@@ -11,8 +11,10 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import com.eswaraj.base.BaseEswarajTest;
 import com.eswaraj.base.aspect.TestObjectContextManager;
+import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
+import com.eswaraj.web.dto.LocationTypeDto;
 
 public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 
@@ -41,12 +43,25 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 		}
 	}
 	
-	protected LocationDto createLocation(String name, LocationType locationType, Long parentLocationId){
+	protected LocationDto createLocation(String name, LocationTypeDto locationTypeDto, Long parentLocationId){
 		LocationDto location = new LocationDto();
 		location.setName(name);
-		location.setLocationType(locationType);
+		if(locationTypeDto != null){
+			location.setLocationTypeId(locationTypeDto.getId());	
+		}
 		location.setParentLocationId(parentLocationId);
 		return location;
+	}
+	protected LocationTypeDto createLocationType(String name, Long parentLocationTypeId){
+		LocationTypeDto location = new LocationTypeDto();
+		location.setName(name);
+		location.setParentLocationTypeId(parentLocationTypeId);
+		return location;
+	}
+	protected LocationTypeDto createAndSaveLocationType(LocationService locationService, String name, Long parentLocationTypeId) throws ApplicationException{
+		LocationTypeDto locationTypeDto = createLocationType(name, parentLocationTypeId);
+		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		return locationTypeDto;
 	}
 	/**
 	 * If you dont want your test to delete newly created DB objects to be deleted, then call this method from your test
@@ -58,8 +73,15 @@ public class BaseNeo4jEswarajTest extends BaseEswarajTest {
 	protected void assertEqualLocations(LocationDto expectedLocation, LocationDto actualLocation){
 		assertEquals(expectedLocation.getLattitude(), actualLocation.getLattitude());
 		assertEquals(expectedLocation.getLongitude(), actualLocation.getLongitude());
-		assertEquals(expectedLocation.getLocationType(), actualLocation.getLocationType());
+		assertEquals(expectedLocation.getLocationTypeId(), actualLocation.getLocationTypeId());
 		assertEquals(expectedLocation.getParentLocationId(), actualLocation.getParentLocationId());
+		assertEquals(expectedLocation.getName(), actualLocation.getName());
+	}
+	
+	protected void assertEqualLocationTypes(LocationTypeDto expectedLocation, LocationTypeDto actualLocation, boolean checkId){
+		if(checkId){
+			assertEquals(expectedLocation.getId(), actualLocation.getId());	
+		}
 		assertEquals(expectedLocation.getName(), actualLocation.getName());
 	}
 

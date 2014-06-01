@@ -1,8 +1,5 @@
 package com.eswaraj.web.admin.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,8 @@ import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.CustomService;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
+import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.LocationTypeJsonDto;
 
 @Controller
 public class LocationController {
@@ -42,13 +40,6 @@ public class LocationController {
         if (!file.isEmpty()) {
             try {
             	customService.processLocationBoundaryFile(locationId, file.getInputStream());
-            	/*
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
-                stream.write(bytes);
-                stream.close();
-                */
                 return "You successfully uploaded " + name + " into " + name + "-uploaded !";
             } catch (Exception e) {
                 return "You failed to upload " + name + " => " + e.getMessage();
@@ -58,15 +49,20 @@ public class LocationController {
         }
     }
 	
+	@RequestMapping(value = "/ajax/locationtype/get", method = RequestMethod.GET)
+	public @ResponseBody LocationTypeJsonDto getLocationTypes(ModelAndView mv) throws ApplicationException {
+		LocationTypeJsonDto locationTypeJsonDto = locationService.getLocationTypes("beingIgnored");
+		return locationTypeJsonDto;
+	}
+	@RequestMapping(value = "/ajax/locationtype/save", method = RequestMethod.POST)
+	public @ResponseBody LocationTypeDto saveLocationTypes(ModelAndView mv, @RequestBody LocationTypeDto locationTypeDto) throws ApplicationException {
+		locationTypeDto = locationService.saveLocationType(locationTypeDto);
+		return locationTypeDto;
+	}
+
 	@RequestMapping(value = "/ajax/location/getroot", method = RequestMethod.GET)
 	public @ResponseBody LocationDto getRootLocationNode(ModelAndView mv) throws ApplicationException {
-		LocationDto locationDto = locationService.getLocationByNameAndType("India", LocationType.COUNTRY);
-		if(locationDto == null){
-			locationDto = new LocationDto();
-			locationDto.setName("India");
-			locationDto.setLocationType(LocationType.COUNTRY);
-			locationDto = locationService.saveLocation(locationDto);
-		}
+		LocationDto locationDto = locationService.getRootLocationForSwarajIndia();
 		return locationDto;
 	}
 	
@@ -76,59 +72,9 @@ public class LocationController {
 		return locationDtos;
 	}
 	
-	@RequestMapping(value = "/ajax/location/state/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/ajax/location/save", method = RequestMethod.POST)
 	public @ResponseBody LocationDto saveState(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.STATE);
 		locationDto = locationService.saveLocation(locationDto);
 		return locationDto;
 	}
-	@RequestMapping(value = "/ajax/location/district/save", method = RequestMethod.POST, consumes="application/json")
-	public @ResponseBody LocationDto saveDistrict(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.DISTRICT);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/ac/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveAc(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.ASSEMBLY_CONSTITUENCY);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/city/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveCity(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.CITY);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/localarea/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveLocalArea(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.LOCAL_AREA);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/munciple/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveMunciple(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.MUNCIPLE);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/pc/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto savePc(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.PARLIAMENT_CONSTITUENCY);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/village/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveVillage(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.VILLAGE);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-	@RequestMapping(value = "/ajax/location/ward/save", method = RequestMethod.POST)
-	public @ResponseBody LocationDto saveWard(ModelAndView mv, @RequestBody LocationDto locationDto) throws ApplicationException {
-		locationDto.setLocationType(LocationType.WARD);
-		locationDto = locationService.saveLocation(locationDto);
-		return locationDto;
-	}
-
 }

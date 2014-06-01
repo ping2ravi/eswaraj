@@ -5,8 +5,8 @@ public class LocationDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private LocationType locationType;
 	private Long parentLocationId;
+	private Long locationTypeId;
 	private Double lattitude;
 	private Double longitude;
 	
@@ -15,12 +15,6 @@ public class LocationDto extends BaseDto {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public LocationType getLocationType() {
-		return locationType;
-	}
-	public void setLocationType(LocationType locationType) {
-		this.locationType = locationType;
 	}
 	public Long getParentLocationId() {
 		return parentLocationId;
@@ -40,20 +34,23 @@ public class LocationDto extends BaseDto {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	public Long getLocationTypeId() {
+		return locationTypeId;
+	}
+	public void setLocationTypeId(Long locationTypeId) {
+		this.locationTypeId = locationTypeId;
+	}
 	@Override
 	public String toString() {
-		return "LocationDto [name=" + name + ", locationType=" + locationType + ", parentLocationId=" + parentLocationId + ", lattitude=" + lattitude
+		return "LocationDto [name=" + name + ", parentLocationId=" + parentLocationId + ", locationTypeId=" + locationTypeId + ", lattitude=" + lattitude
 				+ ", longitude=" + longitude + ", getId()=" + getId() + "]";
 	}
 	@Override
 	public int hashCode() {
-		if(getId() != null){
-			return super.hashCode();
-		}
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((lattitude == null) ? 0 : lattitude.hashCode());
-		result = prime * result + ((locationType == null) ? 0 : locationType.hashCode());
+		result = prime * result + ((locationTypeId == null) ? 0 : locationTypeId.hashCode());
 		result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parentLocationId == null) ? 0 : parentLocationId.hashCode());
@@ -63,20 +60,20 @@ public class LocationDto extends BaseDto {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		LocationDto other = (LocationDto) obj;
-		if(getId() != null && other.getId() != null){
-			return super.equals(other);
-		}
 		if (lattitude == null) {
 			if (other.lattitude != null)
 				return false;
 		} else if (!lattitude.equals(other.lattitude))
 			return false;
-		if (locationType != other.locationType)
+		if (locationTypeId == null) {
+			if (other.locationTypeId != null)
+				return false;
+		} else if (!locationTypeId.equals(other.locationTypeId))
 			return false;
 		if (longitude == null) {
 			if (other.longitude != null)

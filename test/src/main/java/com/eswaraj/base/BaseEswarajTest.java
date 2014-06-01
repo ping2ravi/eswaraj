@@ -26,7 +26,7 @@ public class BaseEswarajTest extends BaseTest {
 	 * Set up the Mockery, which happens before every test
 	 */
 	@Before
-	public final void beforeEveryTest() {
+	public void beforeEveryTest() {
 		UNIQUENESS_GROUPS_BY_CLASS.clear();
 		mockery = new JUnit4Mockery() {
 			{

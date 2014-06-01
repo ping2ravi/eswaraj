@@ -15,6 +15,8 @@ public class GeoPoint {
 	protected Long id;
 	private double lattitude;
 	private double longitude;
+	private int sequence;
+	private Boundary boundary;
 	
 	public Long getId() {
 		return id;
@@ -33,5 +35,17 @@ public class GeoPoint {
 	}
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public Boundary getBoundary() {
+		return boundary;
+	}
+	public void setBoundary(Boundary boundary) {
+		this.boundary = boundary;
 	}
 }

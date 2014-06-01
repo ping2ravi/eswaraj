@@ -1,7 +1,5 @@
 package com.eswaraj.domain.nodes.division;
 
-import java.util.List;
-
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.eswaraj.domain.base.BaseNode;
@@ -16,14 +14,23 @@ import com.eswaraj.domain.base.BaseNode;
 public class Boundary extends BaseNode{
 
 	
-	private List<GeoPoint> geoPoints;
+	private GeoPoint topLeft;
+	private GeoPoint bottomRight;
 
-	public List<GeoPoint> getGeoPoints() {
-		return geoPoints;
+	public GeoPoint getTopLeft() {
+		return topLeft;
 	}
 
-	public void setGeoPoints(List<GeoPoint> geoPoints) {
-		this.geoPoints = geoPoints;
-	} 
-	
+	public void setTopLeft(GeoPoint topLeft) {
+		this.topLeft = topLeft;
+	}
+
+	public GeoPoint getBottomRight() {
+		return bottomRight;
+	}
+
+	public void setBottomRight(GeoPoint bottomRight) {
+		this.bottomRight = bottomRight;
+	}
+
 }

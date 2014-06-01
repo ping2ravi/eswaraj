@@ -4,9 +4,12 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.eswaraj.core.exceptions.ApplicationException;
+import com.eswaraj.web.dto.BoundaryDto;
+import com.eswaraj.web.dto.GeoPointDto;
 import com.eswaraj.web.dto.LocationBoundaryFileDto;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
+import com.eswaraj.web.dto.LocationTypeDto;
+import com.eswaraj.web.dto.LocationTypeJsonDto;
 
 public interface LocationService {
 
@@ -17,7 +20,13 @@ public interface LocationService {
 	
 	List<LocationDto> getChildLocationsOfParent(Long parentLocationId) throws ApplicationException;
 	
-	LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
+	LocationTypeDto saveLocationType(LocationTypeDto locationTypeDto) throws ApplicationException;
+	
+	LocationTypeJsonDto getLocationTypes(String clientName) throws ApplicationException;
+	
+	//LocationDto getLocationByNameAndType(String locationName, LocationType locationType) throws ApplicationException;
+	
+	LocationDto getRootLocationForSwarajIndia() throws ApplicationException;
 	
 	/**
 	 * We are passing the file service from outside as its not possible to inject FileService for testing on proxy implemention
@@ -28,4 +37,10 @@ public interface LocationService {
 	 * @throws ApplicationException
 	 */
 	LocationBoundaryFileDto createNewLocationBoundaryFile(Long locationId, InputStream inputStream, FileService fileService) throws ApplicationException;
+	
+	BoundaryDto saveBoundary(BoundaryDto boundaryDto) throws ApplicationException;
+	
+	GeoPointDto saveBoundaryPoint(GeoPointDto geoPointDto) throws ApplicationException;
+	
+	
 }

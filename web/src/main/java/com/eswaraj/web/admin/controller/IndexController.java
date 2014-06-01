@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eswaraj.core.exceptions.ApplicationException;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
 
 @Controller
 public class IndexController {
@@ -56,7 +54,7 @@ public class IndexController {
 	public ModelAndView simple(ModelAndView mv) throws ApplicationException {
 		LocationDto locationDto = new LocationDto();
 		locationDto.setName("India");
-		locationDto.setLocationType(LocationType.COUNTRY);
+		//locationDto.setLocationType(LocationType.COUNTRY);
 		locationDto = locationService.saveLocation(locationDto);
 		mv.getModel().put("locationDto", locationDto);
 		mv.setViewName("index");

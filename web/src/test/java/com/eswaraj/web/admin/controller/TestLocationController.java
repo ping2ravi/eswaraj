@@ -28,7 +28,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.eswaraj.base.BaseEswarajMockitoTest;
 import com.eswaraj.core.service.LocationService;
 import com.eswaraj.web.dto.LocationDto;
-import com.eswaraj.web.dto.LocationType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,6 +43,8 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	private LocationService locationService;
 
 	private MockMvc mockMvc;
+	
+	private final String saveLocationUrl = "/ajax/location/save";
 
 	@Before
 	public void setup() {
@@ -54,11 +55,11 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	public void test01_getroot() throws Exception {
 		// create Test expectation data
 		Long parentLocationId = null;
-		LocationType rootLocationType = LocationType.COUNTRY;
-		LocationDto locationDto = createOneLocation(parentLocationId, rootLocationType);
+		Long locationTypeId = randomLong();
+		LocationDto locationDto = createOneLocation(parentLocationId, locationTypeId);
 
 		// Set Mock expectation
-		when(locationService.getLocationByNameAndType("India", LocationType.COUNTRY)).thenReturn(locationDto);
+		when(locationService.getRootLocationForSwarajIndia()).thenReturn(locationDto);
 
 		// Run test
 		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
@@ -67,16 +68,16 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		// System.out.println("Content = "+content().);
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
 
-		checkLocation(result, locationDto, parentLocationId);
+		checkLocation(result, locationDto, parentLocationId, locationTypeId);
 	}
 
 	@Test
 	public void test02_getChildLocations() throws Exception {
 		// create Test expectation data
 		Long parentLocationId = randomLong();
-		LocationType childLocationType = LocationType.STATE;
-		LocationDto firstLocationDto = createOneLocation(parentLocationId, childLocationType);
-		LocationDto secondLocationDto = createOneLocation(parentLocationId, childLocationType);
+		Long locationTypeId = randomLong();
+		LocationDto firstLocationDto = createOneLocation(parentLocationId, locationTypeId);
+		LocationDto secondLocationDto = createOneLocation(parentLocationId, locationTypeId);
 		List<LocationDto> childLocations = new ArrayList<>();
 		childLocations.add(firstLocationDto);
 		childLocations.add(secondLocationDto);
@@ -90,7 +91,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		// System.out.println("Content = "+content().);
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
 
-		checkLocationArray(result, childLocations, parentLocationId);
+		checkLocationArray(result, childLocations, parentLocationId, locationTypeId);
 	}
 
 	/**
@@ -100,326 +101,32 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void test03_saveState() throws Exception {
-		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.STATE);
-	}
+	public void test03_saveLocation() throws Exception {
 
-	/**
-	 * Save State when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test04_saveState() throws Exception {
-		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, null);
-	}
 
-	/**
-	 * Save State when Client passes LocationType as Non State, i.e Country It
-	 * should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test05_saveState() throws Exception {
-		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.COUNTRY);
-		saveLocationWithLocationType("/ajax/location/state/save", LocationType.STATE, LocationType.CITY);
-	}
-	
-	/**
-	 * Save District when Client passes LocationType as District in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test06_saveDistrict() throws Exception {
-		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, LocationType.DISTRICT);
-	}
-
-	/**
-	 * Save District when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test07_saveDistrict() throws Exception {
-		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, null);
-	}
-
-	/**
-	 * Save District when Client passes LocationType as Non District, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test08_saveDistrict() throws Exception {
-		saveLocationWithLocationType("/ajax/location/district/save", LocationType.DISTRICT, LocationType.STATE);
-	}
-	
-	/**
-	 * Save AC when Client passes LocationType as AC in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test09_saveAc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, LocationType.ASSEMBLY_CONSTITUENCY);
-	}
-
-	/**
-	 * Save AC when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test10_saveAc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, null);
-	}
-
-	/**
-	 * Save AC when Client passes LocationType as Non AC, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test11_saveAc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ac/save", LocationType.ASSEMBLY_CONSTITUENCY, LocationType.STATE);
-	}
-	
-	
-	/**
-	 * Save PC when Client passes LocationType as PC in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test12_savePc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, LocationType.PARLIAMENT_CONSTITUENCY);
-	}
-
-	/**
-	 * Save PC when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test13_savePc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, null);
-	}
-
-	/**
-	 * Save PC when Client passes LocationType as Non PC, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test14_savePc() throws Exception {
-		saveLocationWithLocationType("/ajax/location/pc/save", LocationType.PARLIAMENT_CONSTITUENCY, LocationType.STATE);
-	}
-
-	/**
-	 * Save CITY when Client passes LocationType as CITY in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test15_saveCity() throws Exception {
-		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, LocationType.CITY);
-	}
-
-	/**
-	 * Save CITY when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test16_saveCity() throws Exception {
-		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, null);
-	}
-
-	/**
-	 * Save CITY when Client passes LocationType as Non CITY, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test17_saveCity() throws Exception {
-		saveLocationWithLocationType("/ajax/location/city/save", LocationType.CITY, LocationType.STATE);
-	}
-	
-	/**
-	 * Save LocalArea when Client passes LocationType as LocalArea in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test18_saveLocalArea() throws Exception {
-		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, LocationType.LOCAL_AREA);
-	}
-
-	/**
-	 * Save LocalArea when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test19_saveLocalArea() throws Exception {
-		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, null);
-	}
-
-	/**
-	 * Save LocalArea when Client passes LocationType as Non LocalArea, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test20_saveLocalArea() throws Exception {
-		saveLocationWithLocationType("/ajax/location/localarea/save", LocationType.LOCAL_AREA, LocationType.STATE);
-	}
-	
-	/**
-	 * Save MUNCIPLE when Client passes LocationType as MUNCIPLE in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test21_saveMunciple() throws Exception {
-		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, LocationType.MUNCIPLE);
-	}
-
-	/**
-	 * Save MUNCIPLE when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test22_saveMunciple() throws Exception {
-		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, null);
-	}
-
-	/**
-	 * Save Munciple when Client passes LocationType as Non Munciple, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test23_saveMunciple() throws Exception {
-		saveLocationWithLocationType("/ajax/location/munciple/save", LocationType.MUNCIPLE, LocationType.STATE);
-	}
-	
-	
-	/**
-	 * Save VILLAGE when Client passes LocationType as VILLAGE in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test24_saveVillage() throws Exception {
-		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, LocationType.VILLAGE);
-	}
-
-	/**
-	 * Save VILLAGE when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test25_saveVillage() throws Exception {
-		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, null);
-	}
-
-	/**
-	 * Save VILLAGE when Client passes LocationType as Non VILLAGE, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test26_saveVillage() throws Exception {
-		saveLocationWithLocationType("/ajax/location/village/save", LocationType.VILLAGE, LocationType.STATE);
-	}
-	
-	/**
-	 * Save WARD when Client passes LocationType as WARD in json It should
-	 * save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test27_saveWard() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, LocationType.WARD);
-	}
-
-	/**
-	 * Save WARD when Client passes LocationType as null It should save it as
-	 * LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test28_saveWard() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, null);
-	}
-
-	/**
-	 * Save WARD when Client passes LocationType as Non WARD, i.e State 
-	 * It should save it as LocationType is always ignored
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void test29_saveWard() throws Exception {
-		saveLocationWithLocationType("/ajax/location/ward/save", LocationType.WARD, LocationType.STATE);
-	}
-
-	/*
-	 * when saving a location with the locationType as per url
-	 */
-	private void saveLocationWithLocationType(String saveUrl, LocationType locationType, LocationType actualLocationTypeSent) throws Exception {
 		// create Test expectation data
 		Long parentLocationId = randomLong();
-		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, locationType);
+		Long locationTypeId = randomLong();
+		LocationDto newLocationToBeSaved = createOneLocation(parentLocationId, locationTypeId);
 		LocationDto locationAfterSave = copyOneLocation(newLocationToBeSaved);
 		// For creating the new Location set Id as Null
 		newLocationToBeSaved.setId(null);
 		LocationDto clientLocationToBeSavedWithNullType = copyOneLocation(newLocationToBeSaved);
-		clientLocationToBeSavedWithNullType.setLocationType(actualLocationTypeSent);
 
 		// Set Mock expectation
 		when(locationService.saveLocation(newLocationToBeSaved)).thenReturn(locationAfterSave);
 
 		// Run test
 		MediaType expectedMediaType = MediaType.APPLICATION_JSON;
-		ResultActions result = mockMvc.perform(post(saveUrl).accept(expectedMediaType).contentType(APPLICATION_JSON_UTF8)
+		ResultActions result = mockMvc.perform(post(saveLocationUrl).accept(expectedMediaType).contentType(APPLICATION_JSON_UTF8)
 				.content(convertObjectToJsonBytes(newLocationToBeSaved)));
 		result.andExpect(status().isOk());
 		result.andExpect(content().contentType("application/json;charset=UTF-8"));
 
-		checkLocation(result, locationAfterSave, parentLocationId);
+		checkLocation(result, locationAfterSave, parentLocationId, locationTypeId);
 	}
 
-	private void checkLocationArray(ResultActions result, List<LocationDto> locations, Long parentLocationId) throws Exception {
+	private void checkLocationArray(ResultActions result, List<LocationDto> locations, Long parentLocationId, Long locationTypeId) throws Exception {
 		LocationDto locationDto;
 		int sizeOfArray = locations.size();
 		result.andExpect(jsonPath("$", hasSize(sizeOfArray)));
@@ -429,7 +136,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 			result.andExpect(jsonPath("$[" + i + "].id").value(locationDto.getId()));
 			result.andExpect(jsonPath("$[" + i + "].lattitude").value(locationDto.getLattitude()));
 			result.andExpect(jsonPath("$[" + i + "].longitude").value(locationDto.getLongitude()));
-			result.andExpect(jsonPath("$[" + i + "].locationType").value(locationDto.getLocationType().name()));
+			result.andExpect(jsonPath("$[" + i + "].locationTypeId").value(locationTypeId));
 			// For country Parent Id must Not be null and must be equal to
 			// parametr we passed to url
 			if (parentLocationId == null) {
@@ -440,12 +147,12 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		}
 	}
 
-	private void checkLocation(ResultActions result, LocationDto locationDto, Long parentLocationId) throws Exception {
+	private void checkLocation(ResultActions result, LocationDto locationDto, Long parentLocationId, Long locationTypeId) throws Exception {
 		result.andExpect(jsonPath("$.name").value(locationDto.getName()));
 		result.andExpect(jsonPath("$.id").value(locationDto.getId()));
 		result.andExpect(jsonPath("$.lattitude").value(locationDto.getLattitude()));
 		result.andExpect(jsonPath("$.longitude").value(locationDto.getLongitude()));
-		result.andExpect(jsonPath("$.locationType").value(locationDto.getLocationType().name()));
+		result.andExpect(jsonPath("$.locationTypeId").value(locationTypeId));
 		// For country Parent Id must Not be null and must be equal to parametr
 		// we passed to url
 		if (parentLocationId == null) {
@@ -455,7 +162,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		}
 	}
 
-	private LocationDto createOneLocation(Long parentLocationId, LocationType locationType) {
+	private LocationDto createOneLocation(Long parentLocationId, Long locationTypeId) {
 		Long firstLocationId = randomLong();
 		String firstLocationName = randomAlphaString(30);
 		Double firstLocationLattitude = randomDouble(180);
@@ -466,7 +173,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		locationDto.setName(firstLocationName);
 		locationDto.setLattitude(firstLocationLattitude);
 		locationDto.setLongitude(rootLocationLongitude);
-		locationDto.setLocationType(locationType);
+		locationDto.setLocationTypeId(locationTypeId);
 		locationDto.setParentLocationId(parentLocationId);
 
 		return locationDto;
@@ -478,7 +185,7 @@ public class TestLocationController extends BaseEswarajMockitoTest {
 		locationDto.setName(sourceLocation.getName());
 		locationDto.setLattitude(sourceLocation.getLattitude());
 		locationDto.setLongitude(sourceLocation.getLongitude());
-		locationDto.setLocationType(sourceLocation.getLocationType());
+		locationDto.setLocationTypeId(sourceLocation.getLocationTypeId());
 		locationDto.setParentLocationId(sourceLocation.getParentLocationId());
 
 		return locationDto;

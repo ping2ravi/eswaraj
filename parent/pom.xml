@@ -14,15 +14,15 @@
 
 	<properties>
 		<eswaraj.version>1.0.0-SNAPSHOT</eswaraj.version>
-		<org.springframework.version>3.2.4.RELEASE</org.springframework.version>
-		<!-- <org.springframework.version>4.0.4.RELEASE</org.springframework.version> -->
+		<!-- <org.springframework.version>3.2.4.RELEASE</org.springframework.version>-->
+		<org.springframework.version>4.0.4.RELEASE</org.springframework.version> 
 		<org.hibernate.version>4.2.6.Final</org.hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<spring.social.version>1.0.3.RELEASE</spring.social.version>
 		<social-google-version>1.0.0.M3</social-google-version>
-		<neo4j.version>1.9.5</neo4j.version>
+		<neo4j.version>1.9.7</neo4j.version>
 		<spring.data.version>2.3.2.RELEASE</spring.data.version>
 		<jmock.version>2.6.0</jmock.version>
 		<org.aspectj.version>1.8.0</org.aspectj.version>
@@ -36,6 +36,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
+			<scope>test</scope>
 		</dependency>
 		<!-- Core utilities used by other modules. Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
 		<dependency>

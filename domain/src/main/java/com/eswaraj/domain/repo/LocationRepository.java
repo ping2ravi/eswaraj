@@ -9,8 +9,8 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.eswaraj.domain.nodes.ExecutiveBody;
 import com.eswaraj.domain.nodes.Location;
+import com.eswaraj.domain.nodes.LocationType;
 import com.eswaraj.domain.nodes.PoliticalBody;
-import com.eswaraj.web.dto.LocationType;
 
 /**
  * Repo for location queries
@@ -32,6 +32,9 @@ public interface LocationRepository extends GraphRepository<Location>{
 	
 	@Query("start location=node:Location(name={0}) where location.locationType={1} return location")
     public Location getLocationByNameAndType(String name, LocationType locationType);
+
+	@Query("start locationType=node({0}) match (locationType)<-[:OF_TYPE]-(location) where location.parentLocation is null return location")
+    public Location getRootLocationByLocationType( Long locationTypeId);
 
 	@Query("start location=node:Location(locationType={0}) return location")
     public List<Location> findLocationByLocationtype(LocationType locationType);

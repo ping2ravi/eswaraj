@@ -5,7 +5,6 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.eswaraj.domain.base.BaseNode;
-import com.eswaraj.web.dto.LocationType;
 
 /**
  * Location of the complaint
@@ -18,7 +17,8 @@ public class Location extends BaseNode {
 
 	@Indexed
 	private String name;
-	@Indexed
+	
+	@RelatedTo(type="OF_TYPE")
 	private LocationType locationType;
 	
 	@RelatedTo(type="PART_OF")
